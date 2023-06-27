@@ -128,3 +128,11 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+graph-node/data/
+graph-node/ipfs-data/
+ve-api-subgraph/build/
+node_modules
+tests/
+generated/

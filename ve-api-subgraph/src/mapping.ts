@@ -13,7 +13,7 @@ export function handleVoted(event: ethereum.Event): void {
   vote.save();
 
   // Print the event data on the screen
-  log.info("Voted Event - Vote ID: {}, Voter: {}, Choice: {}", [
+  log.info("Voted Event - Vote ID: {}, tokenId: {}, weight: {}", [
     voteId.toString(),
     vote.voter,
     choice.toString(),
@@ -31,7 +31,7 @@ export function handleAbstained(event: ethereum.Event): void {
   vote.save();
 
   // Print the event data on the screen
-  log.info("Abstained Event - Vote ID: {}, Voter: {}, Choice: {}", [
+  log.info("Abstained Event - Vote ID: {}, tokenId: {}, weight: {}", [
     voteId.toString(),
     vote.voter,
     abstainedChoice.toString(),
