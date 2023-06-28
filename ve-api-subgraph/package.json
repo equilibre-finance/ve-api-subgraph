@@ -4,15 +4,15 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://graph.equilibrefinance.com/subgraphs/name/equilibre/subgraph1/graphql",
-    "create-local": "graph create --node http://graph-node:8020/ equilibre-finance/ve-api-subgraph",
-    "remove-local": "graph remove --node http://graph-node:8020/ equilibre-finance/ve-api-subgraph",
-    "deploy-local": "graph deploy --node http://graph-node:8020/ --ipfs http://ipfs-node:5001 equilibre-finance/ve-api-subgraph",
+    "deploy": "graph deploy --node http://0.0.0.0:8020/ equilibre-finance/ve-api-subgraph",
+    "create-local": "graph create --node http://0.0.0.0:8020/ equilibre-finance/ve-api-subgraph",
+    "remove-local": "graph remove --node http://0.0.0.0:8020/ equilibre-finance/ve-api-subgraph",
+    "deploy-local": "graph deploy --node http://0.0.0.0:8020/ --ipfs http://0.0.0.0:5001 equilibre-finance/ve-api-subgraph",
     "test": "graph test"
   },
   "dependencies": {
-    "@graphprotocol/graph-cli": "0.51.1",
-    "@graphprotocol/graph-ts": "0.30.0",
-    "web3": "^4.0.1"
+    "@graphprotocol/graph-cli": "^0.51.2",
+    "@graphprotocol/graph-ts": "^0.30.0",
+    "web3": "^1.0.0"
   }
 }
