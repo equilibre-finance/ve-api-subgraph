@@ -5,9 +5,9 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://graph.equilibrefinance.com/subgraphs/name/equilibre/subgraph1/graphql",
-    "create-local": "graph create --node http://localhost:8020/ equilibre-finance/ve-api-subgraph",
-    "remove-local": "graph remove --node http://localhost:8020/ equilibre-finance/ve-api-subgraph",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 equilibre-finance/ve-api-subgraph",
+    "create-local": "graph create --node http://graph-node:8020/ equilibre-finance/ve-api-subgraph",
+    "remove-local": "graph remove --node http://graph-node:8020/ equilibre-finance/ve-api-subgraph",
+    "deploy-local": "graph deploy --node http://graph-node:8020/ --ipfs http://ipfs-node:5001 equilibre-finance/ve-api-subgraph",
     "test": "graph test"
   },
   "dependencies": {
