@@ -1,0 +1,38 @@
+version: '3'
+services:
+  graph-node:
+    image: graphprotocol/graph-node:v0.24.1
+    ports:
+      - 8000:8000
+      - 8020:8020
+      - 8030:8030
+    volumes:
+      - ./data:/data
+    environment:
+      - GRAPH_LOG=info
+      - GRAPH_GRAPHQL_PORT=8000
+      - GRAPH_GRAPHQL_ADMIN_PORT=8020
+      - GRAPH_WS_PORT=8030
+      - GRAPH_NODE_ID=graph-node
+      - GRAPH_GRAPHQL_ENDPOINT=http://graph-node:8000/
+      - GRAPH_GRAPHQL_WS_ENDPOINT=ws://graph-node:8030/
+      - GRAPH_GRAPHQL_ADMIN_ENDPOINT=http://graph-node:8020/
+      - GRAPH_ADMIN_WWW=true
+      - GRAPH_IPFS=http://ipfs-node:5001
+      - GRAPH_ETHEREUM=mainnet:http://your-ethereum-node-url:8545
+    networks:
+      - graph-network
+
+  ipfs-node:
+    image: ipfs/go-ipfs:v0.12.0
+    ports:
+      - 5001:5001
+      - 8080:8080
+    volumes:
+      - ./ipfs-data:/data/ipfs
+    command: ["daemon", "--offline"]
+    networks:
+      - graph-network
+
+networks:
+  graph-network:
