@@ -14,12 +14,12 @@ services:
     extra_hosts:
       - host.docker.internal:host-gateway
     environment:
+      ethereum: 'mainnet:https://evm2.kava.io'      
       postgres_host: postgres
       postgres_user: graph-node
       postgres_pass: let-me-in
       postgres_db: graph-node
       ipfs: 'ipfs:5001'
-      ethereum: 'mainnet:http://host.docker.internal:8545'
       GRAPH_LOG: info
   ipfs:
     image: ipfs/go-ipfs:v0.10.0
