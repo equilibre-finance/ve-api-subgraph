@@ -63,29 +63,20 @@ export class Vote extends Entity {
     this.set("voter", Value.fromString(value));
   }
 
-  get choice(): BigInt {
+  get choice(): BigInt | null {
     let value = this.get("choice");
     if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
+      return null;
     } else {
       return value.toBigInt();
     }
   }
 
-  set choice(value: BigInt) {
-    this.set("choice", Value.fromBigInt(value));
-  }
-
-  get timestamp(): BigInt {
-    let value = this.get("timestamp");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
+  set choice(value: BigInt | null) {
+    if (!value) {
+      this.unset("choice");
     } else {
-      return value.toBigInt();
+      this.set("choice", Value.fromBigInt(<BigInt>value));
     }
-  }
-
-  set timestamp(value: BigInt) {
-    this.set("timestamp", Value.fromBigInt(value));
   }
 }
