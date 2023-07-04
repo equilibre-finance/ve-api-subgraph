@@ -1,5 +1,6 @@
 type Vote @entity {
   id: ID!
   voter: String!
+  tokenId: BigInt
   choice: BigInt
 }

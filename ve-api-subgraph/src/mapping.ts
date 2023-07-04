@@ -4,21 +4,24 @@ import { Vote } from "../generated/schema"; // Import the generated 'Vote' entit
 
 // Handler for the Voted event
 export function handleVoted(event: ethereum.Event): void {
-  let voteId = event.parameters[1].value.toBigInt();
+  let tokenId = event.parameters[1].value.toBigInt();
   let choice = event.parameters[2].value.toBigInt();
 
-  let vote = new Vote(voteId.toString());
+  let vote = new Vote(tokenId.toString());
   vote.voter = event.parameters[0].value.toAddress().toHexString();
+  vote.tokenId = tokenId;
   vote.choice = choice;
   vote.save();
 
   // Print the event data on the screen
-  log.info("Voted Event - Vote ID: {}, Voter: {}, weight: {}", [
-    voteId.toString(),
+  log.info("Voted Event - Vote ID: {}, Voter: {}, Token ID: {}, Choice: {}", [
+    tokenId.toString(),
     vote.voter,
+    tokenId.toString(),
     choice.toString(),
   ]);
 }
+
 
 // Handler for the Abstained event
 export function handleAbstained(event: ethereum.Event): void {
