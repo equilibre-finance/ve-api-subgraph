@@ -1,6 +1,7 @@
 import { BigInt, Address, ethereum, log } from "@graphprotocol/graph-ts";
-
 import { Vote } from "../generated/schema"; // Import the generated 'Vote' entity
+
+let currentEpoch: BigInt; // Declare the currentEpoch variable
 
 // Handler for the Voted event
 export function handleVoted(event: ethereum.Event): void {
@@ -18,10 +19,9 @@ export function handleVoted(event: ethereum.Event): void {
     tokenId.toString(),
     vote.voter,
     tokenId.toString(),
-    choice.toString(),
+    choice.toString()
   ]);
 }
-
 
 // Handler for the Abstained event
 export function handleAbstained(event: ethereum.Event): void {
@@ -31,12 +31,13 @@ export function handleAbstained(event: ethereum.Event): void {
   let vote = new Vote(voteId.toString());
   vote.voter = event.transaction.from.toHexString();
   vote.choice = abstainedChoice;
+
   vote.save();
 
   // Print the event data on the screen
-  log.info("Abstained Event - Vote ID: {}, Voter: {}, weight: {}", [
+  log.info("Abstained Event - Vote ID: {}, Voter: {}, Choice: {}", [
     voteId.toString(),
     vote.voter,
-    abstainedChoice.toString(),
+    abstainedChoice.toString()
   ]);
 }
