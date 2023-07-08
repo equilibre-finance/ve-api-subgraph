@@ -4,3 +4,78 @@ type Vote @entity {
   tokenId: BigInt
   choice: BigInt
 }
+
+type AbstainedEvent @entity {
+  id: ID!
+  tokenId: BigInt
+  weight: BigInt
+}
+
+type AttachEvent @entity {
+  id: ID!
+  owner: Bytes!
+  gauge: Bytes!
+  tokenId: BigInt
+}
+
+type DepositEvent @entity {
+  id: ID!
+  lp: Bytes!
+  gauge: Bytes!
+  tokenId: BigInt
+  amount: BigInt
+}
+
+type DetachEvent @entity {
+  id: ID!
+  owner: Bytes!
+  gauge: Bytes!
+  tokenId: BigInt
+}
+
+type DistributeRewardEvent @entity {
+  id: ID!
+  sender: Bytes!
+  gauge: Bytes!
+  amount: BigInt
+}
+
+type GaugeCreatedEvent @entity {
+  id: ID!
+  gauge: Bytes!
+  creator: Bytes!
+  internal_bribe: Bytes!
+  external_bribe: Bytes!
+  pool: Bytes!
+}
+
+type GaugeKilledEvent @entity {
+  id: ID!
+  gauge: Bytes!
+}
+
+type GaugeRevivedEvent @entity {
+  id: ID!
+  gauge: Bytes!
+}
+
+type NotifyRewardEvent @entity {
+  id: ID!
+  sender: Bytes!
+  reward: Bytes!
+  amount: BigInt
+}
+
+type WhitelistedEvent @entity {
+  id: ID!
+  whitelister: Bytes!
+  token: Bytes!
+}
+
+type WithdrawEvent @entity {
+  id: ID!
+  lp: Bytes!
+  gauge: Bytes!
+  tokenId: BigInt
+  amount: BigInt
+}
