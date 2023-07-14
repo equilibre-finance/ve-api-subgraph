@@ -5,8 +5,8 @@ const app = express();
 const port = 3001;
 
 // Set the GraphQL endpoint URL for your deployed subgraph
-const endpoint0 = 'http://localhost:8000/subgraphs/name/equilibre/subgraph1';
-const endpoint1 = 'https://graph.equilibrefinance.com:3000/subgraphs/name/equilibre/subgraph1';
+const endpoint0 = 'http://localhost:8000';
+const endpoint1 = 'http://localhost:3001';
 
 app.get('/votes', async (req, res) => {
   const { id, voter, choice, epoch } = req.query;
