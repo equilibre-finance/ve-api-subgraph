@@ -2,7 +2,7 @@ const express = require('express');
 const { request } = require('graphql-request');
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 // Set the GraphQL endpoint URL for your deployed subgraph
 const endpoint0 = 'http://localhost:8000/subgraphs/name/equilibre/subgraph1';
@@ -77,8 +77,7 @@ app.get('/votes', async (req, res) => {
 });
 
 
-app.get('/tokens', async (req, res) => {
-  const { id, voter, choice, epoch } = req.query;
+app.get('/tokens', async (req, res) => {  
 
   let query = `
     query {
@@ -97,7 +96,7 @@ app.get('/tokens', async (req, res) => {
   `;
 
   try {
-    const data = await request(endpoint, query);
+    const data = await request(endpoint1, query);
     console.log(data)
     
     res.send(data.votes);
