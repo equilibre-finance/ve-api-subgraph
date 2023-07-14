@@ -5,7 +5,8 @@ const app = express();
 const port = 3000;
 
 // Set the GraphQL endpoint URL for your deployed subgraph
-const endpoint = 'http://localhost:8000/subgraphs/name/equilibre/subgraph1';
+const endpoint0 = 'http://localhost:8000/subgraphs/name/equilibre/subgraph1';
+const endpoint1 = 'https://graph.equilibrefinance.com:3000/subgraphs/name/equilibre/subgraph1';
 
 app.get('/votes', async (req, res) => {
   const { id, voter, choice, epoch } = req.query;
@@ -67,8 +68,36 @@ app.get('/votes', async (req, res) => {
   }
 
   try {
-    const data = await request(endpoint, query);
+    const data = await request(endpoint0, query);    
+    res.send(data.votes);
+  } catch (error) {
+    console.error('Error fetching votes:', error);
+    res.status(500).send('Error fetching votes');
+  }
+});
 
+
+app.get('/tokens', async (req, res) => {
+  const { id, voter, choice, epoch } = req.query;
+
+  let query = `
+    query {
+      tokens {
+        id
+        name
+        symbol
+        totalLiquidity
+        totalSupply
+        tradeVolumeUSD
+        tradeVolume
+        txCount
+        untrackedVolumeUSD
+      }
+    }
+  `;
+
+  try {
+    const data = await request(endpoint, query);
     console.log(data)
     
     res.send(data.votes);
