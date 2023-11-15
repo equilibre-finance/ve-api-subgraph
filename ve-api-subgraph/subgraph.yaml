@@ -55,8 +55,7 @@ dataSources:
         - event: Whitelisted(indexed address,indexed address)
           handler: handleWhitelisted
         - event: Withdraw(indexed address,indexed address,uint256,uint256)
-          handler: handleWithdraw
-  
+          handler: handleWithdraw  
   - kind: ethereum/contract
     name: EquilibreV2Factory
     network: mainnet
@@ -92,8 +91,7 @@ dataSources:
         - event: SetFeeProtocol(uint8,uint8,uint8,uint8)
           handler: handleSetFeeProtocol
         - event: SetPoolFeeProtocol(address,uint8,uint8,uint8,uint8)
-          handler: handleSetPoolFeeProtocol
-          
+          handler: handleSetPoolFeeProtocol          
     - kind: ethereum/contract
       name: FeeCollector
       network: mainnet
@@ -120,7 +118,6 @@ dataSources:
             handler: handleTreasuryChanged
           - event: TreasuryFeesChanged(uint256,uint256)
             handler: handleTreasuryFeesChanged
-
     - kind: ethereum/contract
       name: EquilibreV2Pool
       network: mainnet
@@ -185,7 +182,6 @@ dataSources:
         eventHandlers:
           - event: PositionPeriodSecondsInRange(uint256,address,uint256,int24,int24,uint256)
             handler: handlePositionPeriodSecondsInRange
-
     - kind: ethereum/contract
       name: ProtocolActions
       network: mainnet
@@ -443,4 +439,33 @@ dataSources:
         eventHandlers:
           - event: Initialized(uint8)
             handler: handleInitialized
+    - kind: ethereum/contract
+      name: SinkDrain
+      network: mainnet
+      source:
+        address: "0xa332573B1899eb9eD3CA331e3410795B3ae6ca6A"
+        abi: SinkDrain
+        startBlock: 5530444
+      mapping:
+        kind: ethereum/events
+        apiVersion: 0.0.6
+        language: wasm/assemblyscript
+        file: ./src/sinkDrain.ts
+        entities:
+          - Approval
+          - Initialized
+          - OwnershipTransferred
+          - Transfer
+        abis:
+          - name: SinkDrain
+            file: ./abis/SinkDrain.json
+        eventHandlers:
+          - event: Approval(address,address,uint256)
+            handler: handleApproval
+          - event: Initialized(uint8)
+            handler: handleInitialized
+          - event: OwnershipTransferred(address,address)
+            handler: handleOwnershipTransferred
+          - event: Transfer(address,address,uint256)
+            handler: handleTransfer
     
