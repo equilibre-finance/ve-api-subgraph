@@ -525,3 +525,65 @@ type ConvertVe @entity {
   lockEnd: BigInt!
   timestamp: BigInt!
 }
+
+
+
+type Approval @entity {
+  id: ID!
+  owner: String!
+  spender: String!
+  value: BigInt!
+}
+
+type Initialized @entity {
+  id: ID!
+  version: Int!
+}
+
+type Swap @entity {
+  id: ID!
+  sender: String!
+  to: String!
+  amount0In: BigInt!
+  amount1In: BigInt!
+  amount0Out: BigInt!
+  amount1Out: BigInt!
+}
+
+type Transfer @entity {
+  id: ID!
+  from: String!
+  to: String!
+  value: BigInt!
+}
+
+
+
+type Approval @entity {
+  id: ID!
+  owner: String!
+  spender: String!
+  value: BigInt!
+}
+
+type Initialized @entity {
+  id: ID!
+  version: Int!
+}
+
+type Swap @entity {
+  id: ID!
+  sender: String!
+  to: String!
+  amount0In: BigInt!
+  amount1In: BigInt!
+  amount0Out: BigInt!
+  amount1Out: BigInt!
+}
+
+type Transfer @entity {
+  id: ID!
+  from: String!
+  to: String!
+  value: BigInt!
+}
