@@ -79,3 +79,58 @@ type WithdrawEvent @entity {
   tokenId: BigInt
   amount: BigInt
 }
+
+type Pool @entity {
+  id: ID!
+  token0: String!
+  token1: String!
+  fee: BigInt!
+  tickSpacing: Int!
+}
+
+type Fee @entity {
+  id: ID!
+  feeAmount: BigInt!
+  tickSpacing: Int!
+}
+
+type Owner @entity {
+  id: ID!
+  oldOwner: String!
+  newOwner: String!
+}
+
+type FeeSetter @entity {
+  id: ID!
+  oldFeeSetter: String!
+  newFeeSetter: String!
+}
+
+type FeeCollector @entity {
+  id: ID!
+  oldFeeCollector: String!
+  newFeeCollector: String!
+}
+
+type Implementation @entity {
+  id: ID!
+  oldImplementation: String!
+  newImplementation: String!
+}
+
+type FeeProtocol @entity {
+  id: ID!
+  oldFeeProtocol0: Int!
+  oldFeeProtocol1: Int!
+  newFeeProtocol0: Int!
+  newFeeProtocol1: Int!
+}
+
+type PoolFeeProtocol @entity {
+  id: ID!
+  pool: String!
+  oldFeeProtocol0: Int!
+  oldFeeProtocol1: Int!
+  newFeeProtocol0: Int!
+  newFeeProtocol1: Int!
+}

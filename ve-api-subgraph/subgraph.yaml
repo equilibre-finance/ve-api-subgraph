@@ -13,7 +13,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
-      file: ./src/mapping.ts
+      file: ./src/voter.ts
       entities:
         - Vote
         - AbstainedEvent
@@ -30,7 +30,7 @@ dataSources:
         - WithdrawEvent
       abis:
         - name: Voter
-          file: ./voter-abi.json
+          file: ./abis/voter-abi.json
       eventHandlers:
         - event: Voted(indexed address,uint256,uint256)
           handler: handleVoted
@@ -57,3 +57,39 @@ dataSources:
         - event: Withdraw(indexed address,indexed address,uint256,uint256)
           handler: handleWithdraw
   
+  - kind: ethereum/contract
+    name: EquilibreV2Factory
+    network: mainnet
+    source:
+      address: "0x32F96f8Db7AC0a014D803865dE0A18608637080E"  # The EquilibreV2Factory contract address
+      abi: ./abis/EquilibreV2Factory
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/equilibreV2Factory.ts
+      entities:
+        - Pool
+        - Fee
+        - Owner        
+      abis:
+        - name: EquilibreV2Factory
+          file: ./equilibreV2Factory-abi.json
+      eventHandlers:
+        - event: PoolCreated(address,address,uint24,int24,address)
+          handler: handlePoolCreated
+        - event: FeeAmountEnabled(uint24,int24)
+          handler: handleFeeAmountEnabled
+        - event: OwnerChanged(address,address)
+          handler: handleOwnerChanged
+        - event: FeeSetterChanged(address,address)
+          handler: handleFeeSetterChanged
+        - event: FeeCollectorChanged(address,address)
+          handler: handleFeeCollectorChanged
+        - event: ImplementationChanged(address,address)
+          handler: handleImplementationChanged
+        - event: SetFeeProtocol(uint8,uint8,uint8,uint8)
+          handler: handleSetFeeProtocol
+        - event: SetPoolFeeProtocol(address,uint8,uint8,uint8,uint8)
+          handler: handleSetPoolFeeProtocol
