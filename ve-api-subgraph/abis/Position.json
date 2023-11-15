@@ -1,0 +1,48 @@
+[
+    {
+        "inputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "uint256",
+                        "name": "period",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "owner",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "index",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "int24",
+                        "name": "tickLower",
+                        "type": "int24"
+                    },
+                    {
+                        "internalType": "int24",
+                        "name": "tickUpper",
+                        "type": "int24"
+                    }
+                ],
+                "internalType": "struct Position.PositionPeriodSecondsInRangeParams",
+                "name": "params",
+                "type": "tuple"
+            }
+        ],
+        "name": "positionPeriodSecondsInRange",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "periodSecondsInsideX96",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]

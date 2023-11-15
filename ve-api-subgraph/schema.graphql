@@ -253,3 +253,26 @@ type PositionPeriodSecondsInRange @entity {
   periodSecondsInsideX96: BigInt!
 }
 
+
+type CollectProtocol @entity {
+  id: ID!
+  sender: String!
+  recipient: String!
+  amount0: BigInt!
+  amount1: BigInt!
+}
+
+type FeeAdjustment @entity {
+  id: ID!
+  oldFee: Int!
+  newFee: Int!
+}
+
+type SetFeeProtocol @entity {
+  id: ID!
+  feeProtocol0Old: Int!
+  feeProtocol1Old: Int!
+  feeProtocol0New: Int!
+  feeProtocol1New: Int!
+}
+

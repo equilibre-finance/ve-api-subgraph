@@ -1,0 +1,83 @@
+[
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "sender",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "recipient",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint128",
+                "name": "amount0",
+                "type": "uint128"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint128",
+                "name": "amount1",
+                "type": "uint128"
+            }
+        ],
+        "name": "CollectProtocol",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "uint24",
+                "name": "oldFee",
+                "type": "uint24"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint24",
+                "name": "newFee",
+                "type": "uint24"
+            }
+        ],
+        "name": "FeeAdjustment",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "uint8",
+                "name": "feeProtocol0Old",
+                "type": "uint8"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint8",
+                "name": "feeProtocol1Old",
+                "type": "uint8"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint8",
+                "name": "feeProtocol0New",
+                "type": "uint8"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint8",
+                "name": "feeProtocol1New",
+                "type": "uint8"
+            }
+        ],
+        "name": "SetFeeProtocol",
+        "type": "event"
+    }
+]
