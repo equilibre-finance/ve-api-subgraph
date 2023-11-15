@@ -276,3 +276,27 @@ type SetFeeProtocol @entity {
   feeProtocol1New: Int!
 }
 
+
+type Collect @entity {
+  id: ID!
+  tokenId: BigInt!
+  recipient: String!
+  amount0: BigInt!
+  amount1: BigInt!
+}
+
+type DecreaseLiquidity @entity {
+  id: ID!
+  tokenId: BigInt!
+  liquidity: BigInt!
+  amount0: BigInt!
+  amount1: BigInt!
+}
+
+type SwitchAttachment @entity {
+  id: ID!
+  tokenId: BigInt!
+  oldVeVaraTokenId: BigInt!
+  newVeVaraTokenId: BigInt!
+}
+
