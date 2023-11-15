@@ -423,3 +423,23 @@ dataSources:
             handler: handleClaimed
           - event: Initialized(uint8)
             handler: handleInitialized
+    - kind: ethereum/contract
+      name: SinkManagerFacilitator
+      network: mainnet
+      source:
+        address: "0xc7Dd0127B2af97369fB063Cd5aF3467be6cc0eb5"
+        abi: SinkManagerFacilitator
+        startBlock: 5530444
+      mapping:
+        kind: ethereum/events
+        apiVersion: 0.0.6
+        language: wasm/assemblyscript
+        file: ./src/sinkManagerFacilitator.ts
+        entities:
+          - Initialized
+        abis:
+          - name: SinkManagerFacilitator
+            file: ./abis/SinkManagerFacilitator.json
+        eventHandlers:
+          - event: Initialized(uint8)
+            handler: handleInitialized
