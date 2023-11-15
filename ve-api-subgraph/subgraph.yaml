@@ -296,3 +296,32 @@ dataSources:
             handler: handleSwitchAttachment
           - event: Transfer(address,address,uint256)
             handler: handleTransfer
+    - kind: ethereum/contract
+      name: GaugeFactoryForERC20
+      network: mainnet
+      source:
+        address: "0x14416d26a99D584590a117e51A497439D40548B7"
+        abi: GaugeFactoryForERC20
+        startBlock: 5530444  
+      mapping:
+        kind: ethereum/events
+        apiVersion: 0.0.6
+        language: wasm/assemblyscript
+        file: ./src/gaugeFactoryForERC20.ts
+        entities:
+          - GaugeCreated
+          - ImplementationChanged
+          - Initialized
+          - OwnershipTransferred
+        abis:
+          - name: GaugeFactoryForERC20
+            file: ./abis/GaugeFactoryForERC20.json
+        eventHandlers:
+          - event: GaugeCreated(address,address)
+            handler: handleGaugeCreated
+          - event: ImplementationChanged(address,address)
+            handler: handleImplementationChanged
+          - event: Initialized(uint8)
+            handler: handleInitialized
+          - event: OwnershipTransferred(address,address)
+            handler: handleOwnershipTransferred
