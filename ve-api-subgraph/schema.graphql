@@ -307,3 +307,55 @@ type OwnershipTransferred @entity {
   newOwner: String!
 }
 
+type Approval @entity {
+  id: ID!
+  owner: String!
+  approved: String!
+  tokenId: BigInt!
+}
+
+type ApprovalForAll @entity {
+  id: ID!
+  owner: String!
+  operator: String!
+  approved: Boolean!
+}
+
+type Collect @entity {
+  id: ID!
+  tokenId: BigInt!
+  recipient: String!
+  amount0: BigInt!
+  amount1: BigInt!
+}
+
+type DecreaseLiquidity @entity {
+  id: ID!
+  tokenId: BigInt!
+  liquidity: BigInt!
+  amount0: BigInt!
+  amount1: BigInt!
+}
+
+type IncreaseLiquidity @entity {
+  id: ID!
+  tokenId: BigInt!
+  liquidity: BigInt!
+  amount0: BigInt!
+  amount1: BigInt!
+}
+
+type SwitchAttachment @entity {
+  id: ID!
+  tokenId: BigInt!
+  oldVeVaraTokenId: BigInt!
+  newVeVaraTokenId: BigInt!
+}
+
+type Transfer @entity {
+  id: ID!
+  from: String!
+  to: String!
+  tokenId: BigInt!
+}
+
