@@ -494,4 +494,62 @@ dataSources:
             handler: handleConvertVARA
           - event: ConvertVe(address,uint256,uint256,uint256,uint256,uint256)
             handler: handleConvertVe
+    - kind: ethereum/contract
+      name: SinkConverter
+      network: mainnet
+      source:
+        address: "0xd991BaD688Ac40D499d4c9c6562Fc3a72EFe9298"
+        abi: SinkConverter
+        startBlock: 5530444
+      mapping:
+        kind: ethereum/events
+        apiVersion: 0.0.6
+        language: wasm/assemblyscript
+        file: ./src/sinkConverter.ts
+        entities:
+          - Approval
+          - Initialized
+          - Swap
+          - Transfer
+        abis:
+          - name: SinkConverter
+            file: ./abis/SinkConverter.json
+        eventHandlers:
+          - event: Approval(address,address,uint256)
+            handler: handleApproval
+          - event: Initialized(uint8)
+            handler: handleInitialized
+          - event: Swap(address,address,uint256,uint256,uint256,uint256)
+            handler: handleSwap
+          - event: Transfer(address,address,uint256)
+            handler: handleTransfer
+    - kind: ethereum/contract
+      name: GaugeFactoryForERC721
+      network: mainnet
+      source:
+        address: "0x683DAd96c352F2A6D2cEA15CE685dD43b4F3Cfc3"
+        abi: GaugeFactoryForERC721
+        startBlock: 5530444
+      mapping:
+        kind: ethereum/events
+        apiVersion: 0.0.6
+        language: wasm/assemblyscript
+        file: ./src/gaugeFactoryForERC721.ts
+        entities:
+          - GaugeCreated
+          - ImplementationChanged
+          - Initialized
+          - OwnershipTransferred
+        abis:
+          - name: GaugeFactoryForERC721
+            file: ./abis/GaugeFactoryForERC721.json
+        eventHandlers:
+          - event: GaugeCreated(address,address)
+            handler: handleGaugeCreated
+          - event: ImplementationChanged(address,address)
+            handler: handleImplementationChanged
+          - event: Initialized(uint8)
+            handler: handleInitialized
+          - event: OwnershipTransferred(address,address)
+            handler: handleOwnershipTransferred
     
