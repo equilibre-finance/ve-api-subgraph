@@ -300,7 +300,7 @@ dataSources:
       name: GaugeFactoryForERC20
       network: mainnet
       source:
-        address: "0x14416d26a99D584590a117e51A497439D40548B7"
+        address: "0x5152fceb23F418482217bd73F402956b340B398d"
         abi: GaugeFactoryForERC20
         startBlock: 5530444  
       mapping:
