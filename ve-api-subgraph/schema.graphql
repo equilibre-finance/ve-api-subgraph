@@ -383,3 +383,7 @@ type OwnershipTransferred @entity {
   newOwner: String!
 }
 
+type Initialized @entity {
+  id: ID!
+  version: Int!
+}
