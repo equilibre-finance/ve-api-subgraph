@@ -80,6 +80,8 @@ type WithdrawEvent @entity {
   amount: BigInt
 }
 
+
+
 type Pool @entity {
   id: ID!
   token0: String!
@@ -133,4 +135,28 @@ type PoolFeeProtocol @entity {
   oldFeeProtocol1: Int!
   newFeeProtocol0: Int!
   newFeeProtocol1: Int!
+}
+
+
+type FeesCollected @entity {
+  id: ID!
+  collector: String!
+  tokenAmount: BigInt!
+  feeAmount: BigInt!
+  totalCollected: BigInt!
+  timestamp: BigInt!
+}
+
+type TreasuryChanged @entity {
+  id: ID!
+  oldTreasury: String!
+  newTreasury: String!
+  timestamp: BigInt!
+}
+
+type TreasuryFeesChanged @entity {
+  id: ID!
+  oldFeeAmount: BigInt!
+  newFeeAmount: BigInt!
+  timestamp: BigInt!
 }

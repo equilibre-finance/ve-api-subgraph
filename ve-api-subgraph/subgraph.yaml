@@ -61,7 +61,7 @@ dataSources:
     name: EquilibreV2Factory
     network: mainnet
     source:
-      address: "0x32F96f8Db7AC0a014D803865dE0A18608637080E"  # The EquilibreV2Factory contract address
+      address: "0x32F96f8Db7AC0a014D803865dE0A18608637080E"
       abi: ./abis/EquilibreV2Factory
       startBlock: 5530444
     mapping:
@@ -93,3 +93,29 @@ dataSources:
           handler: handleSetFeeProtocol
         - event: SetPoolFeeProtocol(address,uint8,uint8,uint8,uint8)
           handler: handleSetPoolFeeProtocol
+    - kind: ethereum/contract
+      name: FeeCollector
+      network: mainnet
+      source:
+        address: "0x450AC9028D3d7AE644DBC10fb9a598DA857E7759"
+        abi: FeeCollector
+        startBlock: 5530444
+      mapping:
+        kind: ethereum/events
+        apiVersion: 0.0.6
+        language: wasm/assemblyscript
+        file: ./src/feeCollector.ts
+        entities:
+          - FeesCollected
+          - TreasuryChanged
+          - TreasuryFeesChanged
+        abis:
+          - name: FeeCollector
+            file: ./abis/FeeCollector.json
+        eventHandlers:
+          - event: FeesCollected(address,uint256,uint256,uint256,uint256)
+            handler: handleFeesCollected
+          - event: TreasuryChanged(address,address)
+            handler: handleTreasuryChanged
+          - event: TreasuryFeesChanged(uint256,uint256)
+            handler: handleTreasuryFeesChanged
