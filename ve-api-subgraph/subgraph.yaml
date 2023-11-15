@@ -62,7 +62,7 @@ dataSources:
     network: mainnet
     source:
       address: "0x32F96f8Db7AC0a014D803865dE0A18608637080E"
-      abi: ./abis/EquilibreV2Factory
+      abi: EquilibreV2Factory
       startBlock: 5530444
     mapping:
       kind: ethereum/events
@@ -75,7 +75,7 @@ dataSources:
         - Owner        
       abis:
         - name: EquilibreV2Factory
-          file: ./equilibreV2Factory-abi.json
+          file: ./equilibreV2Factory.json
       eventHandlers:
         - event: PoolCreated(address,address,uint24,int24,address)
           handler: handlePoolCreated
@@ -93,6 +93,7 @@ dataSources:
           handler: handleSetFeeProtocol
         - event: SetPoolFeeProtocol(address,uint8,uint8,uint8,uint8)
           handler: handleSetPoolFeeProtocol
+          
     - kind: ethereum/contract
       name: FeeCollector
       network: mainnet
@@ -119,3 +120,48 @@ dataSources:
             handler: handleTreasuryChanged
           - event: TreasuryFeesChanged(uint256,uint256)
             handler: handleTreasuryFeesChanged
+
+    - kind: ethereum/contract
+      name: EquilibreV2Pool
+      network: mainnet
+      source:
+        address: "0x32F96f8Db7AC0a014D803865dE0A18608637080E"
+        abi: EquilibreV2Pool
+        startBlock: 5530444
+      mapping:
+        kind: ethereum/events
+        apiVersion: 0.0.6
+        language: wasm/assemblyscript
+        file: ./src/equilibreV2Pool.ts
+        entities:
+          - Burn
+          - Collect
+          - CollectProtocol
+          - Flash
+          - IncreaseObservationCardinalityNext
+          - Initialize
+          - Mint
+          - SetFeeProtocol
+          - Swap
+        abis:
+          - name: EquilibreV2Pool
+            file: ./abis/EquilibreV2Pool.json
+        eventHandlers:
+          - event: Burn(address,int24,int24,uint128,uint256,uint256)
+            handler: handleBurn
+          - event: Collect(address,address,int24,int24,uint128,uint128)
+            handler: handleCollect
+          - event: CollectProtocol(address,address,uint128,uint128)
+            handler: handleCollectProtocol
+          - event: Flash(address,address,int256,int256,uint160,uint128,int24)
+            handler: handleFlash
+          - event: IncreaseObservationCardinalityNext(uint16,uint16)
+            handler: handleIncreaseObservationCardinalityNext
+          - event: Initialize(uint160,int24)
+            handler: handleInitialize
+          - event: Mint(address,int24,int24,uint128,uint256,uint256)
+            handler: handleMint
+          - event: SetFeeProtocol(uint8,uint8,uint8,uint8)
+            handler: handleSetFeeProtocol
+          - event: Swap(address,address,int256,int256,uint160,uint128,int24)
+            handler: handleSwap
