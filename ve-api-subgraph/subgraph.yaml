@@ -365,3 +365,35 @@ dataSources:
         eventHandlers:
           - event: ManagedRewardCreated(address,address,address)
             handler: handleManagedRewardCreated
+    - kind: ethereum/contract
+      name: FactoryRegistry
+      network: mainnet
+      source:
+        address: "0x7F46f02740cEeb7E5901781173E33017e8340477"
+        abi: FactoryRegistry
+        startBlock: 5530444
+      mapping:
+        kind: ethereum/events
+        apiVersion: 0.0.6
+        language: wasm/assemblyscript
+        file: ./src/factoryRegistry.ts
+        entities:
+          - Approve
+          - Initialized
+          - OwnershipTransferred
+          - SetManagedRewardsFactory
+          - Unapprove
+        abis:
+          - name: FactoryRegistry
+            file: ./abis/FactoryRegistry.json
+        eventHandlers:
+          - event: Approve(address,address,address)
+            handler: handleApprove
+          - event: Initialized(uint8)
+            handler: handleInitialized
+          - event: OwnershipTransferred(address,address)
+            handler: handleOwnershipTransferred
+          - event: SetManagedRewardsFactory(address)
+            handler: handleSetManagedRewardsFactory
+          - event: Unapprove(address,address,address)
+            handler: handleUnapprove
