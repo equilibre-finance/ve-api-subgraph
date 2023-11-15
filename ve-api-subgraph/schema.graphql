@@ -498,3 +498,30 @@ type Transfer @entity {
   to: String!
   value: BigInt!
 }
+
+
+type ClaimRebaseAndGaugeRewards @entity {
+  id: ID!
+  who: String!
+  amountResidual: BigInt!
+  amountRewarded: BigInt!
+  amountRebased: BigInt!
+  timestamp: BigInt!
+}
+
+type ConvertVARA @entity {
+  id: ID!
+  who: String!
+  amount: BigInt!
+  timestamp: BigInt!
+}
+
+type ConvertVe @entity {
+  id: ID!
+  who: String!
+  tokenId: BigInt!
+  tokenIdV2: BigInt!
+  amount: BigInt!
+  lockEnd: BigInt!
+  timestamp: BigInt!
+}

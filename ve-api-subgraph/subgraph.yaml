@@ -468,4 +468,30 @@ dataSources:
             handler: handleOwnershipTransferred
           - event: Transfer(address,address,uint256)
             handler: handleTransfer
+    - kind: ethereum/contract
+      name: SinkManager
+      network: mainnet
+      source:
+        address: "0x11c83F3D2C1DcB858790CF0FdC55C322cB39b867"  
+        abi: SinkManager
+        startBlock: 5530444
+      mapping:
+        kind: ethereum/events
+        apiVersion: 0.0.6
+        language: wasm/assemblyscript
+        file: ./src/sinkManager.ts
+        entities:
+          - ClaimRebaseAndGaugeRewards
+          - ConvertVARA
+          - ConvertVe
+        abis:
+          - name: SinkManager
+            file: ./abis/SinkManager.json
+        eventHandlers:
+          - event: ClaimRebaseAndGaugeRewards(address,uint256,uint256,uint256,uint256)
+            handler: handleClaimRebaseAndGaugeRewards
+          - event: ConvertVARA(address,uint256,uint256)
+            handler: handleConvertVARA
+          - event: ConvertVe(address,uint256,uint256,uint256,uint256,uint256)
+            handler: handleConvertVe
     
