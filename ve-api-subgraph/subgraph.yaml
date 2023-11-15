@@ -238,3 +238,23 @@ dataSources:
             handler: handleDecreaseLiquidity
           - event: SwitchAttachment(uint256,uint256,uint256)
             handler: handleSwitchAttachment
+    - kind: ethereum/contract
+      name: NonfungibleTokenPositionDescriptor
+      network: mainnet
+      source:
+        address: "0xe42ff8592e8D818C78b631003eED05cA97d74C96"  
+        abi: NonfungibleTokenPositionDescriptor
+        startBlock: 5530444
+      mapping:
+        kind: ethereum/events
+        apiVersion: 0.0.6
+        language: wasm/assemblyscript
+        file: ./src/nonfungibleTokenPositionDescriptor.ts
+        entities:
+          - OwnershipTransferred
+        abis:
+          - name: NonfungibleTokenPositionDescriptor
+            file: ./abis/NonfungibleTokenPositionDescriptor.json
+        eventHandlers:
+          - event: OwnershipTransferred(address,address)
+            handler: handleOwnershipTransferred
