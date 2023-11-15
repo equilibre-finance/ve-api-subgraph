@@ -425,3 +425,23 @@ type Unapprove @entity {
   votingRewardsFactory: String!
   gaugeFactory: String!
 }
+
+
+type CheckpointToken @entity {
+  id: ID!
+  time: BigInt!
+  tokens: BigInt!
+}
+
+type Claimed @entity {
+  id: ID!
+  tokenId: BigInt!
+  epochStart: BigInt!
+  epochEnd: BigInt!
+  amount: BigInt!
+}
+
+type Initialized @entity {
+  id: ID!
+  version: Int!
+}
