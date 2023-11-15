@@ -345,3 +345,23 @@ dataSources:
         eventHandlers:
           - event: Initialized(uint8)
             handler: handleInitialized
+    - kind: ethereum/contract
+      name: ManagedRewardsFactory
+      network: mainnet
+      source:
+        address: "0xd7D75450d043FD7f70D558eA5C07b9aadD542a42"
+        abi: ManagedRewardsFactory
+        startBlock: 5530444
+      mapping:
+        kind: ethereum/events
+        apiVersion: 0.0.6
+        language: wasm/assemblyscript
+        file: ./src/managedRewardsFactory.ts
+        entities:
+          - ManagedRewardCreated
+        abis:
+          - name: ManagedRewardsFactory
+            file: ./abis/ManagedRewardsFactory.json
+        eventHandlers:
+          - event: ManagedRewardCreated(address,address,address)
+            handler: handleManagedRewardCreated

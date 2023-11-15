@@ -387,3 +387,11 @@ type Initialized @entity {
   id: ID!
   version: Int!
 }
+
+
+type ManagedRewardCreated @entity {
+  id: ID!
+  voter: String!
+  lockedManagedReward: String!
+  freeManagedReward: String!
+}
