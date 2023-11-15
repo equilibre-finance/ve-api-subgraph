@@ -242,3 +242,14 @@ type Swap @entity {
   tick: BigInt!
 }
 
+
+type PositionPeriodSecondsInRange @entity {
+  id: ID!
+  period: BigInt!
+  owner: String!
+  index: BigInt!
+  tickLower: Int!
+  tickUpper: Int!
+  periodSecondsInsideX96: BigInt!
+}
+

@@ -75,7 +75,7 @@ dataSources:
         - Owner        
       abis:
         - name: EquilibreV2Factory
-          file: ./equilibreV2Factory.json
+          file: ./EquilibreV2Factory.json
       eventHandlers:
         - event: PoolCreated(address,address,uint24,int24,address)
           handler: handlePoolCreated
@@ -165,3 +165,23 @@ dataSources:
             handler: handleSetFeeProtocol
           - event: Swap(address,address,int256,int256,uint160,uint128,int24)
             handler: handleSwap
+    - kind: ethereum/contract
+      name: Position
+      network: mainnet
+      source:
+        address: "0xfdA1777acA69bf204F5f6d60a1AAAB03703fabfB"
+        abi: Position
+        startBlock: 5530444  
+      mapping:
+        kind: ethereum/events
+        apiVersion: 0.0.6
+        language: wasm/assemblyscript
+        file: ./src/position.ts
+        entities:
+          - PositionPeriodSecondsInRange
+        abis:
+          - name: Position
+            file: ./abis/position.json
+        eventHandlers:
+          - event: PositionPeriodSecondsInRange(uint256,address,uint256,int24,int24,uint256)
+            handler: handlePositionPeriodSecondsInRange
