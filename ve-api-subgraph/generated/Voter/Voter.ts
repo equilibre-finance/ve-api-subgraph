@@ -23,94 +23,28 @@ export class Abstained__Params {
     this._event = event;
   }
 
+  get voter(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get pool(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
   get tokenId(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
+    return this._event.parameters[2].value.toBigInt();
   }
 
   get weight(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-}
-
-export class Attach extends ethereum.Event {
-  get params(): Attach__Params {
-    return new Attach__Params(this);
-  }
-}
-
-export class Attach__Params {
-  _event: Attach;
-
-  constructor(event: Attach) {
-    this._event = event;
-  }
-
-  get owner(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get gauge(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-
-  get tokenId(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-}
-
-export class Deposit extends ethereum.Event {
-  get params(): Deposit__Params {
-    return new Deposit__Params(this);
-  }
-}
-
-export class Deposit__Params {
-  _event: Deposit;
-
-  constructor(event: Deposit) {
-    this._event = event;
-  }
-
-  get lp(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get gauge(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-
-  get tokenId(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-
-  get amount(): BigInt {
     return this._event.parameters[3].value.toBigInt();
   }
-}
 
-export class Detach extends ethereum.Event {
-  get params(): Detach__Params {
-    return new Detach__Params(this);
-  }
-}
-
-export class Detach__Params {
-  _event: Detach;
-
-  constructor(event: Detach) {
-    this._event = event;
+  get totalWeight(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
   }
 
-  get owner(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get gauge(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-
-  get tokenId(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
+  get timestamp(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
   }
 }
 
@@ -153,24 +87,36 @@ export class GaugeCreated__Params {
     this._event = event;
   }
 
-  get gauge(): Address {
+  get poolFactory(): Address {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get creator(): Address {
+  get votingRewardsFactory(): Address {
     return this._event.parameters[1].value.toAddress();
   }
 
-  get internal_bribe(): Address {
+  get gaugeFactory(): Address {
     return this._event.parameters[2].value.toAddress();
   }
 
-  get external_bribe(): Address {
+  get pool(): Address {
     return this._event.parameters[3].value.toAddress();
   }
 
-  get pool(): Address {
+  get bribeVotingReward(): Address {
     return this._event.parameters[4].value.toAddress();
+  }
+
+  get feeVotingReward(): Address {
+    return this._event.parameters[5].value.toAddress();
+  }
+
+  get gauge(): Address {
+    return this._event.parameters[6].value.toAddress();
+  }
+
+  get creator(): Address {
+    return this._event.parameters[7].value.toAddress();
   }
 }
 
@@ -207,6 +153,24 @@ export class GaugeRevived__Params {
 
   get gauge(): Address {
     return this._event.parameters[0].value.toAddress();
+  }
+}
+
+export class Initialized extends ethereum.Event {
+  get params(): Initialized__Params {
+    return new Initialized__Params(this);
+  }
+}
+
+export class Initialized__Params {
+  _event: Initialized;
+
+  constructor(event: Initialized) {
+    this._event = event;
+  }
+
+  get version(): i32 {
+    return this._event.parameters[0].value.toI32();
   }
 }
 
@@ -253,25 +217,63 @@ export class Voted__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
+  get pool(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get tokenId(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get weight(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get totalWeight(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
+  get timestamp(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
+  }
+}
+
+export class WhitelistNFT extends ethereum.Event {
+  get params(): WhitelistNFT__Params {
+    return new WhitelistNFT__Params(this);
+  }
+}
+
+export class WhitelistNFT__Params {
+  _event: WhitelistNFT;
+
+  constructor(event: WhitelistNFT) {
+    this._event = event;
+  }
+
+  get whitelister(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
   get tokenId(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
 
-  get weight(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
+  get _bool(): boolean {
+    return this._event.parameters[2].value.toBoolean();
   }
 }
 
-export class Whitelisted extends ethereum.Event {
-  get params(): Whitelisted__Params {
-    return new Whitelisted__Params(this);
+export class WhitelistToken extends ethereum.Event {
+  get params(): WhitelistToken__Params {
+    return new WhitelistToken__Params(this);
   }
 }
 
-export class Whitelisted__Params {
-  _event: Whitelisted;
+export class WhitelistToken__Params {
+  _event: WhitelistToken;
 
-  constructor(event: Whitelisted) {
+  constructor(event: WhitelistToken) {
     this._event = event;
   }
 
@@ -282,35 +284,9 @@ export class Whitelisted__Params {
   get token(): Address {
     return this._event.parameters[1].value.toAddress();
   }
-}
 
-export class Withdraw extends ethereum.Event {
-  get params(): Withdraw__Params {
-    return new Withdraw__Params(this);
-  }
-}
-
-export class Withdraw__Params {
-  _event: Withdraw;
-
-  constructor(event: Withdraw) {
-    this._event = event;
-  }
-
-  get lp(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get gauge(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-
-  get tokenId(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-
-  get amount(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
+  get _bool(): boolean {
+    return this._event.parameters[2].value.toBoolean();
   }
 }
 
@@ -319,29 +295,48 @@ export class Voter extends ethereum.SmartContract {
     return new Voter("Voter", address);
   }
 
-  _ve(): Address {
-    let result = super.call("_ve", "_ve():(address)", []);
+  ClPoolType(): i32 {
+    let result = super.call("ClPoolType", "ClPoolType():(uint8)", []);
 
-    return result[0].toAddress();
+    return result[0].toI32();
   }
 
-  try__ve(): ethereum.CallResult<Address> {
-    let result = super.tryCall("_ve", "_ve():(address)", []);
+  try_ClPoolType(): ethereum.CallResult<i32> {
+    let result = super.tryCall("ClPoolType", "ClPoolType():(uint8)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
+    return ethereum.CallResult.fromValue(value[0].toI32());
   }
 
-  bribefactory(): Address {
-    let result = super.call("bribefactory", "bribefactory():(address)", []);
+  CurvePoolType(): i32 {
+    let result = super.call("CurvePoolType", "CurvePoolType():(uint8)", []);
+
+    return result[0].toI32();
+  }
+
+  try_CurvePoolType(): ethereum.CallResult<i32> {
+    let result = super.tryCall("CurvePoolType", "CurvePoolType():(uint8)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toI32());
+  }
+
+  clPoolFactory(): Address {
+    let result = super.call("clPoolFactory", "clPoolFactory():(address)", []);
 
     return result[0].toAddress();
   }
 
-  try_bribefactory(): ethereum.CallResult<Address> {
-    let result = super.tryCall("bribefactory", "bribefactory():(address)", []);
+  try_clPoolFactory(): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "clPoolFactory",
+      "clPoolFactory():(address)",
+      []
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -368,18 +363,43 @@ export class Voter extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  createGauge(_pool: Address): Address {
-    let result = super.call("createGauge", "createGauge(address):(address)", [
-      ethereum.Value.fromAddress(_pool)
-    ]);
+  createClGauge(_pool: Address): Address {
+    let result = super.call(
+      "createClGauge",
+      "createClGauge(address):(address)",
+      [ethereum.Value.fromAddress(_pool)]
+    );
 
     return result[0].toAddress();
   }
 
-  try_createGauge(_pool: Address): ethereum.CallResult<Address> {
+  try_createClGauge(_pool: Address): ethereum.CallResult<Address> {
     let result = super.tryCall(
-      "createGauge",
-      "createGauge(address):(address)",
+      "createClGauge",
+      "createClGauge(address):(address)",
+      [ethereum.Value.fromAddress(_pool)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  createCurveGauge(_pool: Address): Address {
+    let result = super.call(
+      "createCurveGauge",
+      "createCurveGauge(address):(address)",
+      [ethereum.Value.fromAddress(_pool)]
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_createCurveGauge(_pool: Address): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "createCurveGauge",
+      "createCurveGauge(address):(address)",
       [ethereum.Value.fromAddress(_pool)]
     );
     if (result.reverted) {
@@ -412,20 +432,172 @@ export class Voter extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  external_bribes(param0: Address): Address {
-    let result = super.call(
-      "external_bribes",
-      "external_bribes(address):(address)",
-      [ethereum.Value.fromAddress(param0)]
-    );
+  epochGovernor(): Address {
+    let result = super.call("epochGovernor", "epochGovernor():(address)", []);
 
     return result[0].toAddress();
   }
 
-  try_external_bribes(param0: Address): ethereum.CallResult<Address> {
+  try_epochGovernor(): ethereum.CallResult<Address> {
     let result = super.tryCall(
-      "external_bribes",
-      "external_bribes(address):(address)",
+      "epochGovernor",
+      "epochGovernor():(address)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  epochNext(_timestamp: BigInt): BigInt {
+    let result = super.call("epochNext", "epochNext(uint256):(uint256)", [
+      ethereum.Value.fromUnsignedBigInt(_timestamp)
+    ]);
+
+    return result[0].toBigInt();
+  }
+
+  try_epochNext(_timestamp: BigInt): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("epochNext", "epochNext(uint256):(uint256)", [
+      ethereum.Value.fromUnsignedBigInt(_timestamp)
+    ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  epochStart(_timestamp: BigInt): BigInt {
+    let result = super.call("epochStart", "epochStart(uint256):(uint256)", [
+      ethereum.Value.fromUnsignedBigInt(_timestamp)
+    ]);
+
+    return result[0].toBigInt();
+  }
+
+  try_epochStart(_timestamp: BigInt): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("epochStart", "epochStart(uint256):(uint256)", [
+      ethereum.Value.fromUnsignedBigInt(_timestamp)
+    ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  epochVoteEnd(_timestamp: BigInt): BigInt {
+    let result = super.call("epochVoteEnd", "epochVoteEnd(uint256):(uint256)", [
+      ethereum.Value.fromUnsignedBigInt(_timestamp)
+    ]);
+
+    return result[0].toBigInt();
+  }
+
+  try_epochVoteEnd(_timestamp: BigInt): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "epochVoteEnd",
+      "epochVoteEnd(uint256):(uint256)",
+      [ethereum.Value.fromUnsignedBigInt(_timestamp)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  epochVoteStart(_timestamp: BigInt): BigInt {
+    let result = super.call(
+      "epochVoteStart",
+      "epochVoteStart(uint256):(uint256)",
+      [ethereum.Value.fromUnsignedBigInt(_timestamp)]
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_epochVoteStart(_timestamp: BigInt): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "epochVoteStart",
+      "epochVoteStart(uint256):(uint256)",
+      [ethereum.Value.fromUnsignedBigInt(_timestamp)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  factoryRegistry(): Address {
+    let result = super.call(
+      "factoryRegistry",
+      "factoryRegistry():(address)",
+      []
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_factoryRegistry(): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "factoryRegistry",
+      "factoryRegistry():(address)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  feeCollector(): Address {
+    let result = super.call("feeCollector", "feeCollector():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_feeCollector(): ethereum.CallResult<Address> {
+    let result = super.tryCall("feeCollector", "feeCollector():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  forwarder(): Address {
+    let result = super.call("forwarder", "forwarder():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_forwarder(): ethereum.CallResult<Address> {
+    let result = super.tryCall("forwarder", "forwarder():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  gaugeToBribe(param0: Address): Address {
+    let result = super.call("gaugeToBribe", "gaugeToBribe(address):(address)", [
+      ethereum.Value.fromAddress(param0)
+    ]);
+
+    return result[0].toAddress();
+  }
+
+  try_gaugeToBribe(param0: Address): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "gaugeToBribe",
+      "gaugeToBribe(address):(address)",
       [ethereum.Value.fromAddress(param0)]
     );
     if (result.reverted) {
@@ -435,14 +607,20 @@ export class Voter extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  factory(): Address {
-    let result = super.call("factory", "factory():(address)", []);
+  gaugeToFees(param0: Address): Address {
+    let result = super.call("gaugeToFees", "gaugeToFees(address):(address)", [
+      ethereum.Value.fromAddress(param0)
+    ]);
 
     return result[0].toAddress();
   }
 
-  try_factory(): ethereum.CallResult<Address> {
-    let result = super.tryCall("factory", "factory():(address)", []);
+  try_gaugeToFees(param0: Address): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "gaugeToFees",
+      "gaugeToFees(address):(address)",
+      [ethereum.Value.fromAddress(param0)]
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -450,19 +628,23 @@ export class Voter extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  gaugefactory(): Address {
-    let result = super.call("gaugefactory", "gaugefactory():(address)", []);
+  gaugeType(param0: Address): i32 {
+    let result = super.call("gaugeType", "gaugeType(address):(uint8)", [
+      ethereum.Value.fromAddress(param0)
+    ]);
 
-    return result[0].toAddress();
+    return result[0].toI32();
   }
 
-  try_gaugefactory(): ethereum.CallResult<Address> {
-    let result = super.tryCall("gaugefactory", "gaugefactory():(address)", []);
+  try_gaugeType(param0: Address): ethereum.CallResult<i32> {
+    let result = super.tryCall("gaugeType", "gaugeType(address):(uint8)", [
+      ethereum.Value.fromAddress(param0)
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
+    return ethereum.CallResult.fromValue(value[0].toI32());
   }
 
   gauges(param0: Address): Address {
@@ -492,29 +674,6 @@ export class Voter extends ethereum.SmartContract {
 
   try_governor(): ethereum.CallResult<Address> {
     let result = super.tryCall("governor", "governor():(address)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  internal_bribes(param0: Address): Address {
-    let result = super.call(
-      "internal_bribes",
-      "internal_bribes(address):(address)",
-      [ethereum.Value.fromAddress(param0)]
-    );
-
-    return result[0].toAddress();
-  }
-
-  try_internal_bribes(param0: Address): ethereum.CallResult<Address> {
-    let result = super.tryCall(
-      "internal_bribes",
-      "internal_bribes(address):(address)",
-      [ethereum.Value.fromAddress(param0)]
-    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -560,18 +719,43 @@ export class Voter extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  isWhitelisted(param0: Address): boolean {
-    let result = super.call("isWhitelisted", "isWhitelisted(address):(bool)", [
-      ethereum.Value.fromAddress(param0)
-    ]);
+  isWhitelistedNFT(param0: BigInt): boolean {
+    let result = super.call(
+      "isWhitelistedNFT",
+      "isWhitelistedNFT(uint256):(bool)",
+      [ethereum.Value.fromUnsignedBigInt(param0)]
+    );
 
     return result[0].toBoolean();
   }
 
-  try_isWhitelisted(param0: Address): ethereum.CallResult<boolean> {
+  try_isWhitelistedNFT(param0: BigInt): ethereum.CallResult<boolean> {
     let result = super.tryCall(
-      "isWhitelisted",
-      "isWhitelisted(address):(bool)",
+      "isWhitelistedNFT",
+      "isWhitelistedNFT(uint256):(bool)",
+      [ethereum.Value.fromUnsignedBigInt(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
+  }
+
+  isWhitelistedToken(param0: Address): boolean {
+    let result = super.call(
+      "isWhitelistedToken",
+      "isWhitelistedToken(address):(bool)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+
+    return result[0].toBoolean();
+  }
+
+  try_isWhitelistedToken(param0: Address): ethereum.CallResult<boolean> {
+    let result = super.tryCall(
+      "isWhitelistedToken",
+      "isWhitelistedToken(address):(bool)",
       [ethereum.Value.fromAddress(param0)]
     );
     if (result.reverted) {
@@ -608,6 +792,21 @@ export class Voter extends ethereum.SmartContract {
 
   try_length(): ethereum.CallResult<BigInt> {
     let result = super.tryCall("length", "length():(uint256)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  maxVotingNum(): BigInt {
+    let result = super.call("maxVotingNum", "maxVotingNum():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_maxVotingNum(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("maxVotingNum", "maxVotingNum():(uint256)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -731,6 +930,36 @@ export class Voter extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
+  v1Factory(): Address {
+    let result = super.call("v1Factory", "v1Factory():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_v1Factory(): ethereum.CallResult<Address> {
+    let result = super.tryCall("v1Factory", "v1Factory():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  ve(): Address {
+    let result = super.call("ve", "ve():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_ve(): ethereum.CallResult<Address> {
+    let result = super.tryCall("ve", "ve():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   votes(param0: BigInt, param1: Address): BigInt {
     let result = super.call("votes", "votes(uint256,address):(uint256)", [
       ethereum.Value.fromUnsignedBigInt(param0),
@@ -788,22 +1017,6 @@ export class ConstructorCall__Inputs {
   constructor(call: ConstructorCall) {
     this._call = call;
   }
-
-  get __ve(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get _factory(): Address {
-    return this._call.inputValues[1].value.toAddress();
-  }
-
-  get _gauges(): Address {
-    return this._call.inputValues[2].value.toAddress();
-  }
-
-  get _bribes(): Address {
-    return this._call.inputValues[3].value.toAddress();
-  }
 }
 
 export class ConstructorCall__Outputs {
@@ -814,36 +1027,32 @@ export class ConstructorCall__Outputs {
   }
 }
 
-export class AttachTokenToGaugeCall extends ethereum.Call {
-  get inputs(): AttachTokenToGaugeCall__Inputs {
-    return new AttachTokenToGaugeCall__Inputs(this);
+export class __VaraForwarder_initCall extends ethereum.Call {
+  get inputs(): __VaraForwarder_initCall__Inputs {
+    return new __VaraForwarder_initCall__Inputs(this);
   }
 
-  get outputs(): AttachTokenToGaugeCall__Outputs {
-    return new AttachTokenToGaugeCall__Outputs(this);
+  get outputs(): __VaraForwarder_initCall__Outputs {
+    return new __VaraForwarder_initCall__Outputs(this);
   }
 }
 
-export class AttachTokenToGaugeCall__Inputs {
-  _call: AttachTokenToGaugeCall;
+export class __VaraForwarder_initCall__Inputs {
+  _call: __VaraForwarder_initCall;
 
-  constructor(call: AttachTokenToGaugeCall) {
+  constructor(call: __VaraForwarder_initCall) {
     this._call = call;
   }
 
-  get tokenId(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-
-  get account(): Address {
-    return this._call.inputValues[1].value.toAddress();
+  get trustedForwarder(): Address {
+    return this._call.inputValues[0].value.toAddress();
   }
 }
 
-export class AttachTokenToGaugeCall__Outputs {
-  _call: AttachTokenToGaugeCall;
+export class __VaraForwarder_initCall__Outputs {
+  _call: __VaraForwarder_initCall;
 
-  constructor(call: AttachTokenToGaugeCall) {
+  constructor(call: __VaraForwarder_initCall) {
     this._call = call;
   }
 }
@@ -944,10 +1153,6 @@ export class ClaimRewardsCall__Inputs {
   get _gauges(): Array<Address> {
     return this._call.inputValues[0].value.toAddressArray();
   }
-
-  get _tokens(): Array<Array<Address>> {
-    return this._call.inputValues[1].value.toAddressMatrix();
-  }
 }
 
 export class ClaimRewardsCall__Outputs {
@@ -958,20 +1163,20 @@ export class ClaimRewardsCall__Outputs {
   }
 }
 
-export class CreateGaugeCall extends ethereum.Call {
-  get inputs(): CreateGaugeCall__Inputs {
-    return new CreateGaugeCall__Inputs(this);
+export class CreateClGaugeCall extends ethereum.Call {
+  get inputs(): CreateClGaugeCall__Inputs {
+    return new CreateClGaugeCall__Inputs(this);
   }
 
-  get outputs(): CreateGaugeCall__Outputs {
-    return new CreateGaugeCall__Outputs(this);
+  get outputs(): CreateClGaugeCall__Outputs {
+    return new CreateClGaugeCall__Outputs(this);
   }
 }
 
-export class CreateGaugeCall__Inputs {
-  _call: CreateGaugeCall;
+export class CreateClGaugeCall__Inputs {
+  _call: CreateClGaugeCall;
 
-  constructor(call: CreateGaugeCall) {
+  constructor(call: CreateClGaugeCall) {
     this._call = call;
   }
 
@@ -980,10 +1185,10 @@ export class CreateGaugeCall__Inputs {
   }
 }
 
-export class CreateGaugeCall__Outputs {
-  _call: CreateGaugeCall;
+export class CreateClGaugeCall__Outputs {
+  _call: CreateClGaugeCall;
 
-  constructor(call: CreateGaugeCall) {
+  constructor(call: CreateClGaugeCall) {
     this._call = call;
   }
 
@@ -992,36 +1197,70 @@ export class CreateGaugeCall__Outputs {
   }
 }
 
-export class DetachTokenFromGaugeCall extends ethereum.Call {
-  get inputs(): DetachTokenFromGaugeCall__Inputs {
-    return new DetachTokenFromGaugeCall__Inputs(this);
+export class CreateCurveGaugeCall extends ethereum.Call {
+  get inputs(): CreateCurveGaugeCall__Inputs {
+    return new CreateCurveGaugeCall__Inputs(this);
   }
 
-  get outputs(): DetachTokenFromGaugeCall__Outputs {
-    return new DetachTokenFromGaugeCall__Outputs(this);
+  get outputs(): CreateCurveGaugeCall__Outputs {
+    return new CreateCurveGaugeCall__Outputs(this);
   }
 }
 
-export class DetachTokenFromGaugeCall__Inputs {
-  _call: DetachTokenFromGaugeCall;
+export class CreateCurveGaugeCall__Inputs {
+  _call: CreateCurveGaugeCall;
 
-  constructor(call: DetachTokenFromGaugeCall) {
+  constructor(call: CreateCurveGaugeCall) {
     this._call = call;
   }
 
-  get tokenId(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-
-  get account(): Address {
-    return this._call.inputValues[1].value.toAddress();
+  get _pool(): Address {
+    return this._call.inputValues[0].value.toAddress();
   }
 }
 
-export class DetachTokenFromGaugeCall__Outputs {
-  _call: DetachTokenFromGaugeCall;
+export class CreateCurveGaugeCall__Outputs {
+  _call: CreateCurveGaugeCall;
 
-  constructor(call: DetachTokenFromGaugeCall) {
+  constructor(call: CreateCurveGaugeCall) {
+    this._call = call;
+  }
+
+  get value0(): Address {
+    return this._call.outputValues[0].value.toAddress();
+  }
+}
+
+export class DepositManagedCall extends ethereum.Call {
+  get inputs(): DepositManagedCall__Inputs {
+    return new DepositManagedCall__Inputs(this);
+  }
+
+  get outputs(): DepositManagedCall__Outputs {
+    return new DepositManagedCall__Outputs(this);
+  }
+}
+
+export class DepositManagedCall__Inputs {
+  _call: DepositManagedCall;
+
+  constructor(call: DepositManagedCall) {
+    this._call = call;
+  }
+
+  get _tokenId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get _mTokenId(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+}
+
+export class DepositManagedCall__Outputs {
+  _call: DepositManagedCall;
+
+  constructor(call: DepositManagedCall) {
     this._call = call;
   }
 }
@@ -1073,8 +1312,12 @@ export class Distribute1Call__Inputs {
     this._call = call;
   }
 
-  get _gauge(): Address {
-    return this._call.inputValues[0].value.toAddress();
+  get _start(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get _finish(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
   }
 }
 
@@ -1082,198 +1325,6 @@ export class Distribute1Call__Outputs {
   _call: Distribute1Call;
 
   constructor(call: Distribute1Call) {
-    this._call = call;
-  }
-}
-
-export class Distribute2Call extends ethereum.Call {
-  get inputs(): Distribute2Call__Inputs {
-    return new Distribute2Call__Inputs(this);
-  }
-
-  get outputs(): Distribute2Call__Outputs {
-    return new Distribute2Call__Outputs(this);
-  }
-}
-
-export class Distribute2Call__Inputs {
-  _call: Distribute2Call;
-
-  constructor(call: Distribute2Call) {
-    this._call = call;
-  }
-
-  get start(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-
-  get finish(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-}
-
-export class Distribute2Call__Outputs {
-  _call: Distribute2Call;
-
-  constructor(call: Distribute2Call) {
-    this._call = call;
-  }
-}
-
-export class Distribute3Call extends ethereum.Call {
-  get inputs(): Distribute3Call__Inputs {
-    return new Distribute3Call__Inputs(this);
-  }
-
-  get outputs(): Distribute3Call__Outputs {
-    return new Distribute3Call__Outputs(this);
-  }
-}
-
-export class Distribute3Call__Inputs {
-  _call: Distribute3Call;
-
-  constructor(call: Distribute3Call) {
-    this._call = call;
-  }
-}
-
-export class Distribute3Call__Outputs {
-  _call: Distribute3Call;
-
-  constructor(call: Distribute3Call) {
-    this._call = call;
-  }
-}
-
-export class DistributeFeesCall extends ethereum.Call {
-  get inputs(): DistributeFeesCall__Inputs {
-    return new DistributeFeesCall__Inputs(this);
-  }
-
-  get outputs(): DistributeFeesCall__Outputs {
-    return new DistributeFeesCall__Outputs(this);
-  }
-}
-
-export class DistributeFeesCall__Inputs {
-  _call: DistributeFeesCall;
-
-  constructor(call: DistributeFeesCall) {
-    this._call = call;
-  }
-
-  get _gauges(): Array<Address> {
-    return this._call.inputValues[0].value.toAddressArray();
-  }
-}
-
-export class DistributeFeesCall__Outputs {
-  _call: DistributeFeesCall;
-
-  constructor(call: DistributeFeesCall) {
-    this._call = call;
-  }
-}
-
-export class DistroCall extends ethereum.Call {
-  get inputs(): DistroCall__Inputs {
-    return new DistroCall__Inputs(this);
-  }
-
-  get outputs(): DistroCall__Outputs {
-    return new DistroCall__Outputs(this);
-  }
-}
-
-export class DistroCall__Inputs {
-  _call: DistroCall;
-
-  constructor(call: DistroCall) {
-    this._call = call;
-  }
-}
-
-export class DistroCall__Outputs {
-  _call: DistroCall;
-
-  constructor(call: DistroCall) {
-    this._call = call;
-  }
-}
-
-export class EmitDepositCall extends ethereum.Call {
-  get inputs(): EmitDepositCall__Inputs {
-    return new EmitDepositCall__Inputs(this);
-  }
-
-  get outputs(): EmitDepositCall__Outputs {
-    return new EmitDepositCall__Outputs(this);
-  }
-}
-
-export class EmitDepositCall__Inputs {
-  _call: EmitDepositCall;
-
-  constructor(call: EmitDepositCall) {
-    this._call = call;
-  }
-
-  get tokenId(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-
-  get account(): Address {
-    return this._call.inputValues[1].value.toAddress();
-  }
-
-  get amount(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
-  }
-}
-
-export class EmitDepositCall__Outputs {
-  _call: EmitDepositCall;
-
-  constructor(call: EmitDepositCall) {
-    this._call = call;
-  }
-}
-
-export class EmitWithdrawCall extends ethereum.Call {
-  get inputs(): EmitWithdrawCall__Inputs {
-    return new EmitWithdrawCall__Inputs(this);
-  }
-
-  get outputs(): EmitWithdrawCall__Outputs {
-    return new EmitWithdrawCall__Outputs(this);
-  }
-}
-
-export class EmitWithdrawCall__Inputs {
-  _call: EmitWithdrawCall;
-
-  constructor(call: EmitWithdrawCall) {
-    this._call = call;
-  }
-
-  get tokenId(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-
-  get account(): Address {
-    return this._call.inputValues[1].value.toAddress();
-  }
-
-  get amount(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
-  }
-}
-
-export class EmitWithdrawCall__Outputs {
-  _call: EmitWithdrawCall;
-
-  constructor(call: EmitWithdrawCall) {
     this._call = call;
   }
 }
@@ -1295,12 +1346,24 @@ export class InitializeCall__Inputs {
     this._call = call;
   }
 
-  get _tokens(): Array<Address> {
-    return this._call.inputValues[0].value.toAddressArray();
+  get _forwarder(): Address {
+    return this._call.inputValues[0].value.toAddress();
   }
 
-  get _minter(): Address {
+  get _ve(): Address {
     return this._call.inputValues[1].value.toAddress();
+  }
+
+  get _factoryRegistry(): Address {
+    return this._call.inputValues[2].value.toAddress();
+  }
+
+  get _v1Factory(): Address {
+    return this._call.inputValues[3].value.toAddress();
+  }
+
+  get _clPoolFactory(): Address {
+    return this._call.inputValues[4].value.toAddress();
   }
 }
 
@@ -1359,7 +1422,7 @@ export class NotifyRewardAmountCall__Inputs {
     this._call = call;
   }
 
-  get amount(): BigInt {
+  get _amount(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 }
@@ -1462,6 +1525,66 @@ export class ReviveGaugeCall__Outputs {
   }
 }
 
+export class SetClPoolFactoryCall extends ethereum.Call {
+  get inputs(): SetClPoolFactoryCall__Inputs {
+    return new SetClPoolFactoryCall__Inputs(this);
+  }
+
+  get outputs(): SetClPoolFactoryCall__Outputs {
+    return new SetClPoolFactoryCall__Outputs(this);
+  }
+}
+
+export class SetClPoolFactoryCall__Inputs {
+  _call: SetClPoolFactoryCall;
+
+  constructor(call: SetClPoolFactoryCall) {
+    this._call = call;
+  }
+
+  get _clPoolFactory(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetClPoolFactoryCall__Outputs {
+  _call: SetClPoolFactoryCall;
+
+  constructor(call: SetClPoolFactoryCall) {
+    this._call = call;
+  }
+}
+
+export class SetCurvePoolFactoryCall extends ethereum.Call {
+  get inputs(): SetCurvePoolFactoryCall__Inputs {
+    return new SetCurvePoolFactoryCall__Inputs(this);
+  }
+
+  get outputs(): SetCurvePoolFactoryCall__Outputs {
+    return new SetCurvePoolFactoryCall__Outputs(this);
+  }
+}
+
+export class SetCurvePoolFactoryCall__Inputs {
+  _call: SetCurvePoolFactoryCall;
+
+  constructor(call: SetCurvePoolFactoryCall) {
+    this._call = call;
+  }
+
+  get _v1Factory(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetCurvePoolFactoryCall__Outputs {
+  _call: SetCurvePoolFactoryCall;
+
+  constructor(call: SetCurvePoolFactoryCall) {
+    this._call = call;
+  }
+}
+
 export class SetEmergencyCouncilCall extends ethereum.Call {
   get inputs(): SetEmergencyCouncilCall__Inputs {
     return new SetEmergencyCouncilCall__Inputs(this);
@@ -1488,6 +1611,66 @@ export class SetEmergencyCouncilCall__Outputs {
   _call: SetEmergencyCouncilCall;
 
   constructor(call: SetEmergencyCouncilCall) {
+    this._call = call;
+  }
+}
+
+export class SetEpochGovernorCall extends ethereum.Call {
+  get inputs(): SetEpochGovernorCall__Inputs {
+    return new SetEpochGovernorCall__Inputs(this);
+  }
+
+  get outputs(): SetEpochGovernorCall__Outputs {
+    return new SetEpochGovernorCall__Outputs(this);
+  }
+}
+
+export class SetEpochGovernorCall__Inputs {
+  _call: SetEpochGovernorCall;
+
+  constructor(call: SetEpochGovernorCall) {
+    this._call = call;
+  }
+
+  get _epochGovernor(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetEpochGovernorCall__Outputs {
+  _call: SetEpochGovernorCall;
+
+  constructor(call: SetEpochGovernorCall) {
+    this._call = call;
+  }
+}
+
+export class SetFeeCollectorCall extends ethereum.Call {
+  get inputs(): SetFeeCollectorCall__Inputs {
+    return new SetFeeCollectorCall__Inputs(this);
+  }
+
+  get outputs(): SetFeeCollectorCall__Outputs {
+    return new SetFeeCollectorCall__Outputs(this);
+  }
+}
+
+export class SetFeeCollectorCall__Inputs {
+  _call: SetFeeCollectorCall;
+
+  constructor(call: SetFeeCollectorCall) {
+    this._call = call;
+  }
+
+  get _feeCollector(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetFeeCollectorCall__Outputs {
+  _call: SetFeeCollectorCall;
+
+  constructor(call: SetFeeCollectorCall) {
     this._call = call;
   }
 }
@@ -1522,28 +1705,96 @@ export class SetGovernorCall__Outputs {
   }
 }
 
-export class UpdateAllCall extends ethereum.Call {
-  get inputs(): UpdateAllCall__Inputs {
-    return new UpdateAllCall__Inputs(this);
+export class SetMaxVotingNumCall extends ethereum.Call {
+  get inputs(): SetMaxVotingNumCall__Inputs {
+    return new SetMaxVotingNumCall__Inputs(this);
   }
 
-  get outputs(): UpdateAllCall__Outputs {
-    return new UpdateAllCall__Outputs(this);
+  get outputs(): SetMaxVotingNumCall__Outputs {
+    return new SetMaxVotingNumCall__Outputs(this);
   }
 }
 
-export class UpdateAllCall__Inputs {
-  _call: UpdateAllCall;
+export class SetMaxVotingNumCall__Inputs {
+  _call: SetMaxVotingNumCall;
 
-  constructor(call: UpdateAllCall) {
+  constructor(call: SetMaxVotingNumCall) {
+    this._call = call;
+  }
+
+  get _maxVotingNum(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class SetMaxVotingNumCall__Outputs {
+  _call: SetMaxVotingNumCall;
+
+  constructor(call: SetMaxVotingNumCall) {
     this._call = call;
   }
 }
 
-export class UpdateAllCall__Outputs {
-  _call: UpdateAllCall;
+export class SetTrustedForwarderCall extends ethereum.Call {
+  get inputs(): SetTrustedForwarderCall__Inputs {
+    return new SetTrustedForwarderCall__Inputs(this);
+  }
 
-  constructor(call: UpdateAllCall) {
+  get outputs(): SetTrustedForwarderCall__Outputs {
+    return new SetTrustedForwarderCall__Outputs(this);
+  }
+}
+
+export class SetTrustedForwarderCall__Inputs {
+  _call: SetTrustedForwarderCall;
+
+  constructor(call: SetTrustedForwarderCall) {
+    this._call = call;
+  }
+
+  get forwarder(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetTrustedForwarderCall__Outputs {
+  _call: SetTrustedForwarderCall;
+
+  constructor(call: SetTrustedForwarderCall) {
+    this._call = call;
+  }
+}
+
+export class SetupCall extends ethereum.Call {
+  get inputs(): SetupCall__Inputs {
+    return new SetupCall__Inputs(this);
+  }
+
+  get outputs(): SetupCall__Outputs {
+    return new SetupCall__Outputs(this);
+  }
+}
+
+export class SetupCall__Inputs {
+  _call: SetupCall;
+
+  constructor(call: SetupCall) {
+    this._call = call;
+  }
+
+  get _tokens(): Array<Address> {
+    return this._call.inputValues[0].value.toAddressArray();
+  }
+
+  get _minter(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+}
+
+export class SetupCall__Outputs {
+  _call: SetupCall;
+
+  constructor(call: SetupCall) {
     this._call = call;
   }
 }
@@ -1565,8 +1816,8 @@ export class UpdateForCall__Inputs {
     this._call = call;
   }
 
-  get _gauges(): Array<Address> {
-    return this._call.inputValues[0].value.toAddressArray();
+  get _gauge(): Address {
+    return this._call.inputValues[0].value.toAddress();
   }
 }
 
@@ -1578,20 +1829,20 @@ export class UpdateForCall__Outputs {
   }
 }
 
-export class UpdateForRangeCall extends ethereum.Call {
-  get inputs(): UpdateForRangeCall__Inputs {
-    return new UpdateForRangeCall__Inputs(this);
+export class UpdateFor1Call extends ethereum.Call {
+  get inputs(): UpdateFor1Call__Inputs {
+    return new UpdateFor1Call__Inputs(this);
   }
 
-  get outputs(): UpdateForRangeCall__Outputs {
-    return new UpdateForRangeCall__Outputs(this);
+  get outputs(): UpdateFor1Call__Outputs {
+    return new UpdateFor1Call__Outputs(this);
   }
 }
 
-export class UpdateForRangeCall__Inputs {
-  _call: UpdateForRangeCall;
+export class UpdateFor1Call__Inputs {
+  _call: UpdateFor1Call;
 
-  constructor(call: UpdateForRangeCall) {
+  constructor(call: UpdateFor1Call) {
     this._call = call;
   }
 
@@ -1604,40 +1855,40 @@ export class UpdateForRangeCall__Inputs {
   }
 }
 
-export class UpdateForRangeCall__Outputs {
-  _call: UpdateForRangeCall;
+export class UpdateFor1Call__Outputs {
+  _call: UpdateFor1Call;
 
-  constructor(call: UpdateForRangeCall) {
+  constructor(call: UpdateFor1Call) {
     this._call = call;
   }
 }
 
-export class UpdateGaugeCall extends ethereum.Call {
-  get inputs(): UpdateGaugeCall__Inputs {
-    return new UpdateGaugeCall__Inputs(this);
+export class UpdateFor2Call extends ethereum.Call {
+  get inputs(): UpdateFor2Call__Inputs {
+    return new UpdateFor2Call__Inputs(this);
   }
 
-  get outputs(): UpdateGaugeCall__Outputs {
-    return new UpdateGaugeCall__Outputs(this);
+  get outputs(): UpdateFor2Call__Outputs {
+    return new UpdateFor2Call__Outputs(this);
   }
 }
 
-export class UpdateGaugeCall__Inputs {
-  _call: UpdateGaugeCall;
+export class UpdateFor2Call__Inputs {
+  _call: UpdateFor2Call;
 
-  constructor(call: UpdateGaugeCall) {
+  constructor(call: UpdateFor2Call) {
     this._call = call;
   }
 
-  get _gauge(): Address {
-    return this._call.inputValues[0].value.toAddress();
+  get _gauges(): Array<Address> {
+    return this._call.inputValues[0].value.toAddressArray();
   }
 }
 
-export class UpdateGaugeCall__Outputs {
-  _call: UpdateGaugeCall;
+export class UpdateFor2Call__Outputs {
+  _call: UpdateFor2Call;
 
-  constructor(call: UpdateGaugeCall) {
+  constructor(call: UpdateFor2Call) {
     this._call = call;
   }
 }
@@ -1659,7 +1910,7 @@ export class VoteCall__Inputs {
     this._call = call;
   }
 
-  get tokenId(): BigInt {
+  get _tokenId(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 
@@ -1680,32 +1931,100 @@ export class VoteCall__Outputs {
   }
 }
 
-export class WhitelistCall extends ethereum.Call {
-  get inputs(): WhitelistCall__Inputs {
-    return new WhitelistCall__Inputs(this);
+export class WhitelistNFTCall extends ethereum.Call {
+  get inputs(): WhitelistNFTCall__Inputs {
+    return new WhitelistNFTCall__Inputs(this);
   }
 
-  get outputs(): WhitelistCall__Outputs {
-    return new WhitelistCall__Outputs(this);
+  get outputs(): WhitelistNFTCall__Outputs {
+    return new WhitelistNFTCall__Outputs(this);
   }
 }
 
-export class WhitelistCall__Inputs {
-  _call: WhitelistCall;
+export class WhitelistNFTCall__Inputs {
+  _call: WhitelistNFTCall;
 
-  constructor(call: WhitelistCall) {
+  constructor(call: WhitelistNFTCall) {
+    this._call = call;
+  }
+
+  get _tokenId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get _bool(): boolean {
+    return this._call.inputValues[1].value.toBoolean();
+  }
+}
+
+export class WhitelistNFTCall__Outputs {
+  _call: WhitelistNFTCall;
+
+  constructor(call: WhitelistNFTCall) {
+    this._call = call;
+  }
+}
+
+export class WhitelistTokenCall extends ethereum.Call {
+  get inputs(): WhitelistTokenCall__Inputs {
+    return new WhitelistTokenCall__Inputs(this);
+  }
+
+  get outputs(): WhitelistTokenCall__Outputs {
+    return new WhitelistTokenCall__Outputs(this);
+  }
+}
+
+export class WhitelistTokenCall__Inputs {
+  _call: WhitelistTokenCall;
+
+  constructor(call: WhitelistTokenCall) {
     this._call = call;
   }
 
   get _token(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
+
+  get _bool(): boolean {
+    return this._call.inputValues[1].value.toBoolean();
+  }
 }
 
-export class WhitelistCall__Outputs {
-  _call: WhitelistCall;
+export class WhitelistTokenCall__Outputs {
+  _call: WhitelistTokenCall;
 
-  constructor(call: WhitelistCall) {
+  constructor(call: WhitelistTokenCall) {
+    this._call = call;
+  }
+}
+
+export class WithdrawManagedCall extends ethereum.Call {
+  get inputs(): WithdrawManagedCall__Inputs {
+    return new WithdrawManagedCall__Inputs(this);
+  }
+
+  get outputs(): WithdrawManagedCall__Outputs {
+    return new WithdrawManagedCall__Outputs(this);
+  }
+}
+
+export class WithdrawManagedCall__Inputs {
+  _call: WithdrawManagedCall;
+
+  constructor(call: WithdrawManagedCall) {
+    this._call = call;
+  }
+
+  get _tokenId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class WithdrawManagedCall__Outputs {
+  _call: WithdrawManagedCall;
+
+  constructor(call: WithdrawManagedCall) {
     this._call = call;
   }
 }

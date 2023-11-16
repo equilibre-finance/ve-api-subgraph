@@ -13,38 +13,28 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
-      file: ./src/Voter.ts
+      file: ./src/voter.ts
       entities:
         - Vote
-        - AbstainedEvent
-        - AttachEvent
-        - DepositEvent
-        - DetachEvent
+        - AbstainedEvent        
         - DistributeRewardEvent
         - GaugeCreatedEvent
         - GaugeKilledEvent
         - GaugeRevivedEvent
         - NotifyRewardEvent
         - VotedEvent
-        - WhitelistedEvent
-        - WithdrawEvent
+        - WhitelistedEvent        
       abis:
         - name: Voter
-          file: ./abis/voter-abi.json
+          file: ./abis/Voter.json
       eventHandlers:
-        - event: Voted(indexed address,uint256,uint256)
+        - event: Voted(indexed address,indexed address,indexed uint256,uint256,uint256,uint256)
           handler: handleVoted
-        - event: Abstained(uint256,uint256)
-          handler: handleAbstained
-        - event: Attach(indexed address,indexed address,uint256)
-          handler: handleAttach
-        - event: Deposit(indexed address,indexed address,uint256,uint256)
-          handler: handleDeposit
-        - event: Detach(indexed address,indexed address,uint256)
-          handler: handleDetach
+        - event: Abstained(indexed address,indexed address,indexed uint256,uint256,uint256,uint256)
+          handler: handleAbstained        
         - event: DistributeReward(indexed address,indexed address,uint256)
           handler: handleDistributeReward
-        - event: GaugeCreated(indexed address,address,address,indexed address,indexed address)
+        - event: GaugeCreated(indexed address,indexed address,indexed address,address,address,address,address,address)
           handler: handleGaugeCreated
         - event: GaugeKilled(indexed address)
           handler: handleGaugeKilled
@@ -52,10 +42,10 @@ dataSources:
           handler: handleGaugeRevived
         - event: NotifyReward(indexed address,indexed address,uint256)
           handler: handleNotifyReward
-        - event: Whitelisted(indexed address,indexed address)
+        - event: WhitelistNFT(indexed address,indexed uint256,indexed bool)
           handler: handleWhitelisted
-        - event: Withdraw(indexed address,indexed address,uint256,uint256)
-          handler: handleWithdraw  
+        - event: WhitelistToken(indexed address,indexed address,indexed bool)
+          handler: handleWhitelisted        
   - kind: ethereum/contract
     name: EquilibreV2Factory
     network: mainnet
@@ -74,23 +64,23 @@ dataSources:
         - Owner        
       abis:
         - name: EquilibreV2Factory
-          file: ./EquilibreV2Factory.json
+          file: ./abis/EquilibreV2Factory.json
       eventHandlers:
-        - event: PoolCreated(address,address,uint24,int24,address)
+        - event: PoolCreated(indexed address,indexed address,indexed uint24,int24,address)
           handler: handlePoolCreated
-        - event: FeeAmountEnabled(uint24,int24)
+        - event: FeeAmountEnabled(indexed uint24,indexed int24)
           handler: handleFeeAmountEnabled
-        - event: OwnerChanged(address,address)
+        - event: OwnerChanged(indexed address,indexed address)
           handler: handleOwnerChanged
         - event: FeeSetterChanged(address,address)
           handler: handleFeeSetterChanged
         - event: FeeCollectorChanged(address,address)
           handler: handleFeeCollectorChanged
-        - event: ImplementationChanged(address,address)
+        - event: ImplementationChanged(indexed address,indexed address)
           handler: handleImplementationChanged
         - event: SetFeeProtocol(uint8,uint8,uint8,uint8)
           handler: handleSetFeeProtocol
-        - event: SetPoolFeeProtocol(address,uint8,uint8,uint8,uint8)
+        - event: SetPoolFeeProtocol(indexed address,uint8,uint8,uint8,uint8)
           handler: handleSetPoolFeeProtocol          
   - kind: ethereum/contract
     name: FeeCollector
@@ -129,10 +119,10 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
-      file: ./src/equilibreV2Pool.ts
+      file: ./src/equilibreV2Pools.ts
       entities:
         - Burn
-        - Collect
+        - CollectProtocolBase
         - CollectProtocol
         - Flash
         - IncreaseObservationCardinalityNext
@@ -144,44 +134,24 @@ dataSources:
         - name: EquilibreV2Pool
           file: ./abis/EquilibreV2Pool.json
       eventHandlers:
-        - event: Burn(address,int24,int24,uint128,uint256,uint256)
+        - event: Burn(indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
           handler: handleBurn
-        - event: Collect(address,address,int24,int24,uint128,uint128)
+        - event: Collect(indexed address,address,indexed int24,indexed int24,uint128,uint128)
           handler: handleCollect
-        - event: CollectProtocol(address,address,uint128,uint128)
+        - event: CollectProtocol(indexed address,indexed address,uint128,uint128)
           handler: handleCollectProtocol
-        - event: Flash(address,address,int256,int256,uint160,uint128,int24)
+        - event: Flash(indexed address,indexed address,uint256,uint256,uint256,uint256)
           handler: handleFlash
         - event: IncreaseObservationCardinalityNext(uint16,uint16)
           handler: handleIncreaseObservationCardinalityNext
         - event: Initialize(uint160,int24)
           handler: handleInitialize
-        - event: Mint(address,int24,int24,uint128,uint256,uint256)
+        - event: Mint(address,indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
           handler: handleMint
         - event: SetFeeProtocol(uint8,uint8,uint8,uint8)
           handler: handleSetFeeProtocol
-        - event: Swap(address,address,int256,int256,uint160,uint128,int24)
-          handler: handleSwap
-  - kind: ethereum/contract
-    name: Position
-    network: mainnet
-    source:
-      address: "0xfdA1777acA69bf204F5f6d60a1AAAB03703fabfB"
-      abi: Position
-      startBlock: 5530444  
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      file: ./src/position.ts
-      entities:
-        - PositionPeriodSecondsInRange
-      abis:
-        - name: Position
-          file: ./abis/position.json
-      eventHandlers:
-        - event: PositionPeriodSecondsInRange(uint256,address,uint256,int24,int24,uint256)
-          handler: handlePositionPeriodSecondsInRange
+        - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
+          handler: handleSwap 
   - kind: ethereum/contract
     name: ProtocolActions
     network: mainnet
@@ -202,7 +172,7 @@ dataSources:
         - name: ProtocolActions
           file: ./abis/ProtocolActions.json
       eventHandlers:
-        - event: CollectProtocol(address,address,uint128,uint128)
+        - event: CollectProtocol(indexed address,indexed address,uint128,uint128)
           handler: handleCollectProtocol
         - event: FeeAdjustment(uint24,uint24)
           handler: handleFeeAdjustment
@@ -221,18 +191,18 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/positionManagerAux.ts
       entities:
-        - Collect
+        - CollectPositionManagerAux
         - DecreaseLiquidity
         - SwitchAttachment
       abis:
         - name: PositionManagerAux
           file: ./abis/PositionManagerAux.json
       eventHandlers:
-        - event: Collect(uint256,address,uint256,uint256)
+        - event: Collect(indexed uint256,address,uint256,uint256)
           handler: handleCollect
-        - event: DecreaseLiquidity(uint256,uint128,uint256,uint256)
+        - event: DecreaseLiquidity(indexed uint256,uint128,uint256,uint256)
           handler: handleDecreaseLiquidity
-        - event: SwitchAttachment(uint256,uint256,uint256)
+        - event: SwitchAttachment(indexed uint256,uint256,uint256)
           handler: handleSwitchAttachment
   - kind: ethereum/contract
     name: NonfungibleTokenPositionDescriptor
@@ -252,7 +222,7 @@ dataSources:
         - name: NonfungibleTokenPositionDescriptor
           file: ./abis/NonfungibleTokenPositionDescriptor.json
       eventHandlers:
-        - event: OwnershipTransferred(address,address)
+        - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
   - kind: ethereum/contract
     name: NonfungiblePositionManager
@@ -267,7 +237,7 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/nonfungiblePositionManager.ts
       entities:
-        - Approval
+        - ApprovalNonFungiblePositionManager
         - ApprovalForAll
         - Collect
         - DecreaseLiquidity
@@ -278,19 +248,19 @@ dataSources:
         - name: NonfungiblePositionManager
           file: ./abis/NonfungiblePositionManager.json
       eventHandlers:
-        - event: Approval(address,address,uint256)
+        - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handleApproval
-        - event: ApprovalForAll(address,address,bool)
+        - event: ApprovalForAll(indexed address,indexed address,bool)
           handler: handleApprovalForAll
-        - event: Collect(uint256,address,uint256,uint256)
+        - event: Collect(indexed uint256,address,uint256,uint256)
           handler: handleCollect
-        - event: DecreaseLiquidity(uint256,uint128,uint256,uint256)
+        - event: DecreaseLiquidity(indexed uint256,uint128,uint256,uint256)
           handler: handleDecreaseLiquidity
-        - event: IncreaseLiquidity(uint256,uint128,uint256,uint256)
+        - event: IncreaseLiquidity(indexed uint256,uint128,uint256,uint256)
           handler: handleIncreaseLiquidity
-        - event: SwitchAttachment(uint256,uint256,uint256)
+        - event: SwitchAttachment(indexed uint256,uint256,uint256)
           handler: handleSwitchAttachment
-        - event: Transfer(address,address,uint256)
+        - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
   - kind: ethereum/contract
     name: GaugeFactoryForERC20
@@ -319,7 +289,7 @@ dataSources:
           handler: handleImplementationChanged
         - event: Initialized(uint8)
           handler: handleInitialized
-        - event: OwnershipTransferred(address,address)
+        - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
   - kind: ethereum/contract
     name: VotingRewardsFactory
@@ -359,7 +329,7 @@ dataSources:
         - name: ManagedRewardsFactory
           file: ./abis/ManagedRewardsFactory.json
       eventHandlers:
-        - event: ManagedRewardCreated(address,address,address)
+        - event: ManagedRewardCreated(indexed address,indexed address,indexed address)
           handler: handleManagedRewardCreated
   - kind: ethereum/contract
     name: FactoryRegistry
@@ -383,15 +353,15 @@ dataSources:
         - name: FactoryRegistry
           file: ./abis/FactoryRegistry.json
       eventHandlers:
-        - event: Approve(address,address,address)
+        - event: Approve(indexed address,indexed address,indexed address)
           handler: handleApprove
         - event: Initialized(uint8)
           handler: handleInitialized
-        - event: OwnershipTransferred(address,address)
+        - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
-        - event: SetManagedRewardsFactory(address)
+        - event: SetManagedRewardsFactory(indexed address)
           handler: handleSetManagedRewardsFactory
-        - event: Unapprove(address,address,address)
+        - event: Unapprove(indexed address,indexed address,indexed address)
           handler: handleUnapprove
   - kind: ethereum/contract
     name: RewardsDistributor
@@ -415,7 +385,7 @@ dataSources:
       eventHandlers:
         - event: CheckpointToken(uint256,uint256)
           handler: handleCheckpointToken
-        - event: Claimed(uint256,uint256,uint256,uint256)
+        - event: Claimed(indexed uint256,indexed uint256,indexed uint256,uint256)
           handler: handleClaimed
         - event: Initialized(uint8)
           handler: handleInitialized
@@ -460,13 +430,13 @@ dataSources:
         - name: SinkDrain
           file: ./abis/SinkDrain.json
       eventHandlers:
-        - event: Approval(address,address,uint256)
+        - event: Approval(indexed address,indexed address,uint256)
           handler: handleApproval
         - event: Initialized(uint8)
           handler: handleInitialized
-        - event: OwnershipTransferred(address,address)
+        - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
-        - event: Transfer(address,address,uint256)
+        - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
   - kind: ethereum/contract
     name: SinkManager
@@ -488,11 +458,11 @@ dataSources:
         - name: SinkManager
           file: ./abis/SinkManager.json
       eventHandlers:
-        - event: ClaimRebaseAndGaugeRewards(address,uint256,uint256,uint256,uint256)
+        - event: ClaimRebaseAndGaugeRewards(indexed address,uint256,uint256,uint256,uint256)
           handler: handleClaimRebaseAndGaugeRewards
-        - event: ConvertVARA(address,uint256,uint256)
+        - event: ConvertVARA(indexed address,uint256,uint256)
           handler: handleConvertVARA
-        - event: ConvertVe(address,uint256,uint256,uint256,uint256,uint256)
+        - event: ConvertVe(indexed address,indexed uint256,indexed uint256,uint256,uint256,uint256)
           handler: handleConvertVe
   - kind: ethereum/contract
     name: SinkConverter
@@ -509,19 +479,19 @@ dataSources:
       entities:
         - Approval
         - Initialized
-        - Swap
+        - SwapSink
         - Transfer
       abis:
         - name: SinkConverter
           file: ./abis/SinkConverter.json
       eventHandlers:
-        - event: Approval(address,address,uint256)
+        - event: Approval(indexed address,indexed address,uint256)
           handler: handleApproval
         - event: Initialized(uint8)
           handler: handleInitialized
-        - event: Swap(address,address,uint256,uint256,uint256,uint256)
+        - event: Swap(indexed address,address,uint256,uint256,uint256,uint256)
           handler: handleSwap
-        - event: Transfer(address,address,uint256)
+        - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
   - kind: ethereum/contract
     name: GaugeFactoryForERC721
@@ -550,7 +520,7 @@ dataSources:
           handler: handleImplementationChanged
         - event: Initialized(uint8)
           handler: handleInitialized
-        - event: OwnershipTransferred(address,address)
+        - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
   - kind: ethereum/contract
     name: VotingEscrow
@@ -574,14 +544,14 @@ dataSources:
         - name: VotingEscrow
           file: ./abis/VotingEscrow.json
       eventHandlers:
-        - event: Approval(address,address,uint256)
+        - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handleApproval
-        - event: ApprovalForAll(address,address,bool)
+        - event: ApprovalForAll(indexed address,indexed address,bool)
           handler: handleApprovalForAll
-        - event: Deposit(address,uint256,uint256,uint256)
+        - event: Deposit(indexed address,indexed uint256,indexed uint8,uint256,uint256,uint256)
           handler: handleDeposit
-        - event: Transfer(address,address,uint256)
+        - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-        - event: Withdraw(address,uint256,uint256)
+        - event: Withdraw(indexed address,indexed uint256,uint256,uint256)
           handler: handleWithdraw
     
