@@ -545,9 +545,7 @@ dataSources:
           file: ./abis/VotingEscrow.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,indexed uint256)
-          handler: handleApproval
-        - event: ApprovalForAll(indexed address,indexed address,bool)
-          handler: handleApprovalForAll
+          handler: handleApproval        
         - event: Deposit(indexed address,indexed uint256,indexed uint8,uint256,uint256,uint256)
           handler: handleDeposit
         - event: Transfer(indexed address,indexed address,indexed uint256)
