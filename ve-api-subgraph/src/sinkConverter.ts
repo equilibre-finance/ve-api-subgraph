@@ -24,12 +24,7 @@ export function handleInitialized(event: InitializedEvent): void {
 
 export function handleSwap(event: SwapEvent): void {
   let entity = new Swap(event.transaction.hash.toHex() + '-' + event.logIndex.toString())
-  entity.sender = event.params.sender.toHexString()
-  entity.to = event.params.to.toHexString()
-  entity.amount0In = event.params.amount0In
-  entity.amount1In = event.params.amount1In
-  entity.amount0Out = event.params.amount0Out
-  entity.amount1Out = event.params.amount1Out
+  entity.sender = event.params.sender.toHexString()  
   entity.save()
 }
 

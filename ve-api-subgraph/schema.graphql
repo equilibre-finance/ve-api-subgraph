@@ -452,3 +452,4 @@ type CollectPositionManagerAux @entity {
   amount0: BigInt!
   amount1: BigInt!
 }
+

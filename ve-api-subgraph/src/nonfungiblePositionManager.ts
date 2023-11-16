@@ -14,8 +14,6 @@ import { Approval, ApprovalForAll, Collect, DecreaseLiquidity, IncreaseLiquidity
 export function handleApproval(event: ApprovalEvent): void {
   let entity = new Approval(event.transaction.hash.toHex() + '-' + event.logIndex.toString())
   entity.owner = event.params.owner.toHexString()
-  entity.approved = event.params.approved.toHexString()
-  entity.tokenId = event.params.tokenId
   entity.save()
 }
 
@@ -65,7 +63,6 @@ export function handleSwitchAttachment(event: SwitchAttachmentEvent): void {
 export function handleTransfer(event: TransferEvent): void {
   let entity = new Transfer(event.transaction.hash.toHex() + '-' + event.logIndex.toString())
   entity.from = event.params.from.toHexString()
-  entity.to = event.params.to.toHexString()
-  entity.tokenId = event.params.tokenId
+  entity.to = event.params.to.toHexString()  
   entity.save()
 }

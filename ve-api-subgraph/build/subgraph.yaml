@@ -6,7 +6,7 @@ dataSources:
     name: Voter
     network: mainnet
     source:
-      address: "0x4eB2B9768da9Ea26E3aBe605c9040bC12F236a59"
+      address: "0xa9eA46CBa4cA389f95682eb48Ae6b824303166b6"
       abi: Voter
       startBlock: 5530444
     mapping:
@@ -17,9 +17,6 @@ dataSources:
       entities:
         - Vote
         - AbstainedEvent
-        - AttachEvent
-        - DepositEvent
-        - DetachEvent
         - DistributeRewardEvent
         - GaugeCreatedEvent
         - GaugeKilledEvent
@@ -27,24 +24,18 @@ dataSources:
         - NotifyRewardEvent
         - VotedEvent
         - WhitelistedEvent
-        - WithdrawEvent
       abis:
         - name: Voter
-          file: Voter/voter-abi.json
+          file: Voter/abis/Voter.json
       eventHandlers:
-        - event: Voted(indexed address,uint256,uint256)
+        - event: Voted(indexed address,indexed address,indexed uint256,uint256,uint256,uint256)
           handler: handleVoted
-        - event: Abstained(uint256,uint256)
+        - event: Abstained(indexed address,indexed address,indexed uint256,uint256,uint256,uint256)
           handler: handleAbstained
-        - event: Attach(indexed address,indexed address,uint256)
-          handler: handleAttach
-        - event: Deposit(indexed address,indexed address,uint256,uint256)
-          handler: handleDeposit
-        - event: Detach(indexed address,indexed address,uint256)
-          handler: handleDetach
         - event: DistributeReward(indexed address,indexed address,uint256)
           handler: handleDistributeReward
-        - event: GaugeCreated(indexed address,address,address,indexed address,indexed address)
+        - event: GaugeCreated(indexed address,indexed address,indexed
+            address,address,address,address,address,address)
           handler: handleGaugeCreated
         - event: GaugeKilled(indexed address)
           handler: handleGaugeKilled
@@ -52,7 +43,515 @@ dataSources:
           handler: handleGaugeRevived
         - event: NotifyReward(indexed address,indexed address,uint256)
           handler: handleNotifyReward
-        - event: Whitelisted(indexed address,indexed address)
+        - event: WhitelistNFT(indexed address,indexed uint256,indexed bool)
           handler: handleWhitelisted
-        - event: Withdraw(indexed address,indexed address,uint256,uint256)
+        - event: WhitelistToken(indexed address,indexed address,indexed bool)
+          handler: handleWhitelisted
+  - kind: ethereum/contract
+    name: EquilibreV2Factory
+    network: mainnet
+    source:
+      address: "0x32F96f8Db7AC0a014D803865dE0A18608637080E"
+      abi: EquilibreV2Factory
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: EquilibreV2Factory/EquilibreV2Factory.wasm
+      entities:
+        - Pool
+        - Fee
+        - Owner
+      abis:
+        - name: EquilibreV2Factory
+          file: EquilibreV2Factory/abis/EquilibreV2Factory.json
+      eventHandlers:
+        - event: PoolCreated(indexed address,indexed address,indexed uint24,int24,address)
+          handler: handlePoolCreated
+        - event: FeeAmountEnabled(indexed uint24,indexed int24)
+          handler: handleFeeAmountEnabled
+        - event: OwnerChanged(indexed address,indexed address)
+          handler: handleOwnerChanged
+        - event: FeeSetterChanged(address,address)
+          handler: handleFeeSetterChanged
+        - event: FeeCollectorChanged(address,address)
+          handler: handleFeeCollectorChanged
+        - event: ImplementationChanged(indexed address,indexed address)
+          handler: handleImplementationChanged
+        - event: SetFeeProtocol(uint8,uint8,uint8,uint8)
+          handler: handleSetFeeProtocol
+        - event: SetPoolFeeProtocol(indexed address,uint8,uint8,uint8,uint8)
+          handler: handleSetPoolFeeProtocol
+  - kind: ethereum/contract
+    name: FeeCollector
+    network: mainnet
+    source:
+      address: "0x450AC9028D3d7AE644DBC10fb9a598DA857E7759"
+      abi: FeeCollector
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: FeeCollector/FeeCollector.wasm
+      entities:
+        - FeesCollected
+        - TreasuryChanged
+        - TreasuryFeesChanged
+      abis:
+        - name: FeeCollector
+          file: FeeCollector/abis/FeeCollector.json
+      eventHandlers:
+        - event: FeesCollected(address,uint256,uint256,uint256,uint256)
+          handler: handleFeesCollected
+        - event: TreasuryChanged(address,address)
+          handler: handleTreasuryChanged
+        - event: TreasuryFeesChanged(uint256,uint256)
+          handler: handleTreasuryFeesChanged
+  - kind: ethereum/contract
+    name: EquilibreV2Pool
+    network: mainnet
+    source:
+      address: "0x32F96f8Db7AC0a014D803865dE0A18608637080E"
+      abi: EquilibreV2Pool
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: EquilibreV2Pool/EquilibreV2Pool.wasm
+      entities:
+        - Burn
+        - CollectProtocolBase
+        - CollectProtocol
+        - Flash
+        - IncreaseObservationCardinalityNext
+        - Initialize
+        - Mint
+        - SetFeeProtocol
+        - Swap
+      abis:
+        - name: EquilibreV2Pool
+          file: EquilibreV2Pool/abis/EquilibreV2Pool.json
+      eventHandlers:
+        - event: Burn(indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
+          handler: handleBurn
+        - event: Collect(indexed address,address,indexed int24,indexed int24,uint128,uint128)
+          handler: handleCollect
+        - event: CollectProtocol(indexed address,indexed address,uint128,uint128)
+          handler: handleCollectProtocol
+        - event: Flash(indexed address,indexed address,uint256,uint256,uint256,uint256)
+          handler: handleFlash
+        - event: IncreaseObservationCardinalityNext(uint16,uint16)
+          handler: handleIncreaseObservationCardinalityNext
+        - event: Initialize(uint160,int24)
+          handler: handleInitialize
+        - event: Mint(address,indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
+          handler: handleMint
+        - event: SetFeeProtocol(uint8,uint8,uint8,uint8)
+          handler: handleSetFeeProtocol
+        - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
+          handler: handleSwap
+  - kind: ethereum/contract
+    name: ProtocolActions
+    network: mainnet
+    source:
+      address: "0x7B4BaAA7ec9D3B3D486D9E9e62510422e49420De"
+      abi: ProtocolActions
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ProtocolActions/ProtocolActions.wasm
+      entities:
+        - CollectProtocol
+        - FeeAdjustment
+        - SetFeeProtocol
+      abis:
+        - name: ProtocolActions
+          file: ProtocolActions/abis/ProtocolActions.json
+      eventHandlers:
+        - event: CollectProtocol(indexed address,indexed address,uint128,uint128)
+          handler: handleCollectProtocol
+        - event: FeeAdjustment(uint24,uint24)
+          handler: handleFeeAdjustment
+        - event: SetFeeProtocol(uint8,uint8,uint8,uint8)
+          handler: handleSetFeeProtocol
+  - kind: ethereum/contract
+    name: PositionManagerAux
+    network: mainnet
+    source:
+      address: "0x61E0CC7e29Ff5f96089daf9e17eF8042b6e8E9ad"
+      abi: PositionManagerAux
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: PositionManagerAux/PositionManagerAux.wasm
+      entities:
+        - CollectPositionManagerAux
+        - DecreaseLiquidity
+        - SwitchAttachment
+      abis:
+        - name: PositionManagerAux
+          file: PositionManagerAux/abis/PositionManagerAux.json
+      eventHandlers:
+        - event: Collect(indexed uint256,address,uint256,uint256)
+          handler: handleCollect
+        - event: DecreaseLiquidity(indexed uint256,uint128,uint256,uint256)
+          handler: handleDecreaseLiquidity
+        - event: SwitchAttachment(indexed uint256,uint256,uint256)
+          handler: handleSwitchAttachment
+  - kind: ethereum/contract
+    name: NonfungibleTokenPositionDescriptor
+    network: mainnet
+    source:
+      address: "0xe42ff8592e8D818C78b631003eED05cA97d74C96"
+      abi: NonfungibleTokenPositionDescriptor
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: NonfungibleTokenPositionDescriptor/NonfungibleTokenPositionDescriptor.wasm
+      entities:
+        - OwnershipTransferred
+      abis:
+        - name: NonfungibleTokenPositionDescriptor
+          file: NonfungibleTokenPositionDescriptor/abis/NonfungibleTokenPositionDescriptor.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+  - kind: ethereum/contract
+    name: NonfungiblePositionManager
+    network: mainnet
+    source:
+      address: "0x78D2D691A9fFB206d458D8229Af1ddCFc6B2b68a"
+      abi: NonfungiblePositionManager
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: NonfungiblePositionManager/NonfungiblePositionManager.wasm
+      entities:
+        - ApprovalNonFungiblePositionManager
+        - ApprovalForAll
+        - Collect
+        - DecreaseLiquidity
+        - IncreaseLiquidity
+        - SwitchAttachment
+        - Transfer
+      abis:
+        - name: NonfungiblePositionManager
+          file: NonfungiblePositionManager/abis/NonfungiblePositionManager.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: Collect(indexed uint256,address,uint256,uint256)
+          handler: handleCollect
+        - event: DecreaseLiquidity(indexed uint256,uint128,uint256,uint256)
+          handler: handleDecreaseLiquidity
+        - event: IncreaseLiquidity(indexed uint256,uint128,uint256,uint256)
+          handler: handleIncreaseLiquidity
+        - event: SwitchAttachment(indexed uint256,uint256,uint256)
+          handler: handleSwitchAttachment
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+  - kind: ethereum/contract
+    name: GaugeFactoryForERC20
+    network: mainnet
+    source:
+      address: "0x5152fceb23F418482217bd73F402956b340B398d"
+      abi: GaugeFactoryForERC20
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: GaugeFactoryForERC20/GaugeFactoryForERC20.wasm
+      entities:
+        - GaugeCreated
+        - ImplementationChanged
+        - Initialized
+        - OwnershipTransferred
+      abis:
+        - name: GaugeFactoryForERC20
+          file: GaugeFactoryForERC20/abis/GaugeFactoryForERC20.json
+      eventHandlers:
+        - event: GaugeCreated(address,address)
+          handler: handleGaugeCreated
+        - event: ImplementationChanged(address,address)
+          handler: handleImplementationChanged
+        - event: Initialized(uint8)
+          handler: handleInitialized
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+  - kind: ethereum/contract
+    name: VotingRewardsFactory
+    network: mainnet
+    source:
+      address: "0x14416d26a99D584590a117e51A497439D40548B7"
+      abi: VotingRewardsFactory
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: VotingRewardsFactory/VotingRewardsFactory.wasm
+      entities:
+        - Initialized
+      abis:
+        - name: VotingRewardsFactory
+          file: VotingRewardsFactory/abis/VotingRewardsFactory.json
+      eventHandlers:
+        - event: Initialized(uint8)
+          handler: handleInitialized
+  - kind: ethereum/contract
+    name: ManagedRewardsFactory
+    network: mainnet
+    source:
+      address: "0xd7D75450d043FD7f70D558eA5C07b9aadD542a42"
+      abi: ManagedRewardsFactory
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ManagedRewardsFactory/ManagedRewardsFactory.wasm
+      entities:
+        - ManagedRewardCreated
+      abis:
+        - name: ManagedRewardsFactory
+          file: ManagedRewardsFactory/abis/ManagedRewardsFactory.json
+      eventHandlers:
+        - event: ManagedRewardCreated(indexed address,indexed address,indexed address)
+          handler: handleManagedRewardCreated
+  - kind: ethereum/contract
+    name: FactoryRegistry
+    network: mainnet
+    source:
+      address: "0x7F46f02740cEeb7E5901781173E33017e8340477"
+      abi: FactoryRegistry
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: FactoryRegistry/FactoryRegistry.wasm
+      entities:
+        - Approve
+        - Initialized
+        - OwnershipTransferred
+        - SetManagedRewardsFactory
+        - Unapprove
+      abis:
+        - name: FactoryRegistry
+          file: FactoryRegistry/abis/FactoryRegistry.json
+      eventHandlers:
+        - event: Approve(indexed address,indexed address,indexed address)
+          handler: handleApprove
+        - event: Initialized(uint8)
+          handler: handleInitialized
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: SetManagedRewardsFactory(indexed address)
+          handler: handleSetManagedRewardsFactory
+        - event: Unapprove(indexed address,indexed address,indexed address)
+          handler: handleUnapprove
+  - kind: ethereum/contract
+    name: RewardsDistributor
+    network: mainnet
+    source:
+      address: "0x925A6104a83cb40234D0836c15446eD405EC49bc"
+      abi: RewardsDistributor
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: RewardsDistributor/RewardsDistributor.wasm
+      entities:
+        - CheckpointToken
+        - Claimed
+        - Initialized
+      abis:
+        - name: RewardsDistributor
+          file: RewardsDistributor/abis/RewardsDistributor.json
+      eventHandlers:
+        - event: CheckpointToken(uint256,uint256)
+          handler: handleCheckpointToken
+        - event: Claimed(indexed uint256,indexed uint256,indexed uint256,uint256)
+          handler: handleClaimed
+        - event: Initialized(uint8)
+          handler: handleInitialized
+  - kind: ethereum/contract
+    name: SinkManagerFacilitator
+    network: mainnet
+    source:
+      address: "0xc7Dd0127B2af97369fB063Cd5aF3467be6cc0eb5"
+      abi: SinkManagerFacilitator
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: SinkManagerFacilitator/SinkManagerFacilitator.wasm
+      entities:
+        - Initialized
+      abis:
+        - name: SinkManagerFacilitator
+          file: SinkManagerFacilitator/abis/SinkManagerFacilitator.json
+      eventHandlers:
+        - event: Initialized(uint8)
+          handler: handleInitialized
+  - kind: ethereum/contract
+    name: SinkDrain
+    network: mainnet
+    source:
+      address: "0xa332573B1899eb9eD3CA331e3410795B3ae6ca6A"
+      abi: SinkDrain
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: SinkDrain/SinkDrain.wasm
+      entities:
+        - Approval
+        - Initialized
+        - OwnershipTransferred
+        - Transfer
+      abis:
+        - name: SinkDrain
+          file: SinkDrain/abis/SinkDrain.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Initialized(uint8)
+          handler: handleInitialized
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+  - kind: ethereum/contract
+    name: SinkManager
+    network: mainnet
+    source:
+      address: "0x11c83F3D2C1DcB858790CF0FdC55C322cB39b867"
+      abi: SinkManager
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: SinkManager/SinkManager.wasm
+      entities:
+        - ClaimRebaseAndGaugeRewards
+        - ConvertVARA
+        - ConvertVe
+      abis:
+        - name: SinkManager
+          file: SinkManager/abis/SinkManager.json
+      eventHandlers:
+        - event: ClaimRebaseAndGaugeRewards(indexed address,uint256,uint256,uint256,uint256)
+          handler: handleClaimRebaseAndGaugeRewards
+        - event: ConvertVARA(indexed address,uint256,uint256)
+          handler: handleConvertVARA
+        - event: ConvertVe(indexed address,indexed uint256,indexed uint256,uint256,uint256,uint256)
+          handler: handleConvertVe
+  - kind: ethereum/contract
+    name: SinkConverter
+    network: mainnet
+    source:
+      address: "0xd991BaD688Ac40D499d4c9c6562Fc3a72EFe9298"
+      abi: SinkConverter
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: SinkConverter/SinkConverter.wasm
+      entities:
+        - Approval
+        - Initialized
+        - SwapSink
+        - Transfer
+      abis:
+        - name: SinkConverter
+          file: SinkConverter/abis/SinkConverter.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Initialized(uint8)
+          handler: handleInitialized
+        - event: Swap(indexed address,address,uint256,uint256,uint256,uint256)
+          handler: handleSwap
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+  - kind: ethereum/contract
+    name: GaugeFactoryForERC721
+    network: mainnet
+    source:
+      address: "0x683DAd96c352F2A6D2cEA15CE685dD43b4F3Cfc3"
+      abi: GaugeFactoryForERC721
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: GaugeFactoryForERC721/GaugeFactoryForERC721.wasm
+      entities:
+        - GaugeCreated
+        - ImplementationChanged
+        - Initialized
+        - OwnershipTransferred
+      abis:
+        - name: GaugeFactoryForERC721
+          file: GaugeFactoryForERC721/abis/GaugeFactoryForERC721.json
+      eventHandlers:
+        - event: GaugeCreated(address,address)
+          handler: handleGaugeCreated
+        - event: ImplementationChanged(address,address)
+          handler: handleImplementationChanged
+        - event: Initialized(uint8)
+          handler: handleInitialized
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+  - kind: ethereum/contract
+    name: VotingEscrow
+    network: mainnet
+    source:
+      address: "0x6DdB0b8022c8BE9E9495164b99aAe721ad1B118D"
+      abi: VotingEscrow
+      startBlock: 5530444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: VotingEscrow/VotingEscrow.wasm
+      entities:
+        - Approval
+        - ApprovalForAll
+        - Deposit
+        - Transfer
+        - Withdraw
+      abis:
+        - name: VotingEscrow
+          file: VotingEscrow/abis/VotingEscrow.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: Deposit(indexed address,indexed uint256,indexed uint8,uint256,uint256,uint256)
+          handler: handleDeposit
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: Withdraw(indexed address,indexed uint256,uint256,uint256)
           handler: handleWithdraw

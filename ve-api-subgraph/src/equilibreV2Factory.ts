@@ -16,7 +16,7 @@ export function handlePoolCreated(event: PoolCreated): void {
   let pool = new Pool(event.params.pool.toHexString())
   pool.token0 = event.params.token0.toHexString()
   pool.token1 = event.params.token1.toHexString()
-  pool.fee = event.params.fee
+  pool.fee = BigInt.fromI32(event.params.fee)
   pool.tickSpacing = event.params.tickSpacing
   pool.save()
 }

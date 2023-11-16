@@ -136,3 +136,4 @@ ve-api-subgraph/build/
 node_modules
 tests/
 generated/
+ve-api-subgraph/build/
