@@ -1,5 +1,5 @@
 
-
+# Voter Contract
 
 type Vote @entity {
   id: ID!
@@ -83,7 +83,7 @@ type WithdrawEvent @entity {
   amount: BigInt
 }
 
-
+# EquilibreV2Factory
 
 type Pool @entity {
   id: ID!
@@ -104,6 +104,8 @@ type Owner @entity {
   oldOwner: String!
   newOwner: String!
 }
+
+
 
 type FeeSetter @entity {
   id: ID!
